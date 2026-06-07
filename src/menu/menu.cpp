@@ -168,10 +168,10 @@ void Windows::choiceFuncOfTextPleyfair() {
 			}
 			unsigned char** pm = genMatrixPleyfair(key, MODULE);
 			if (!pm) throw runtime_error("Не удалось создать матрицу");
-			vector<string> bgr = genBigrams(text, marker);
-			vector<string> encrBgr = encrBigrams(pm, bgr, MODULE);
+			vector<string> bgr = genBigramsPleyfair(text, marker);
+			vector<string> encrBgr = encrBigramsPleyfair(pm, bgr, MODULE);
 			deleteMatrix(pm, MODULE);
-			string encrTxt = encrText(encrBgr);
+			string encrTxt = encrTextPleyfair(encrBgr);
 			cout << "Зашифрованный текст:" << endl;
 			cout << encrTxt << endl;
 			break;
@@ -198,10 +198,10 @@ void Windows::choiceFuncOfTextPleyfair() {
 			}
 			unsigned char** pm = genMatrixPleyfair(key, MODULE);
 			if (!pm) throw runtime_error("Не удалось создать матрицу");
-			vector<string> genEncrBgr = genEncrBigrams(text, marker);
-			vector<string> decrBgr = decrBigrams(pm, genEncrBgr, MODULE);
+			vector<string> genEncrBgr = genEncrBigramsPleyfair(text, marker);
+			vector<string> decrBgr = decrBigramsPleyfair(pm, genEncrBgr, MODULE);
 			deleteMatrix(pm, MODULE);
-			string decrTxt = decrText(decrBgr, marker);
+			string decrTxt = decrTextPleyfair(decrBgr, marker);
 			cout << "Расшифрованный text:" << endl;
 			cout << decrTxt << endl;
 			break;
@@ -445,7 +445,7 @@ void Windows::choiceFuncOfFilePleyfair() {
 				}
 			}
 
-			if (encrPleyfFile(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, key, marker, MODULE)) {
+			if (encrFilePleyfair(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, key, marker, MODULE)) {
 				cout << "Файл успешно зашифрован!" << endl;
 				cout << "Зашифрованный файл находится по пути: " << ENCR_DIR + pathFileEncr << endl;
 			}
@@ -498,7 +498,7 @@ void Windows::choiceFuncOfFilePleyfair() {
 				}
 			}
 
-			if (decrPleyfFile(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, key, marker, MODULE)) {
+			if (decrFilePleyfair(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, key, marker, MODULE)) {
 				cout << "Файл успешно расшифрован!" << endl;
 				cout << "Расшифрованный файл находится по пути: " << DECR_DIR + pathFileDecr << endl;
 			}

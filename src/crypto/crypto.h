@@ -18,7 +18,7 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-int sqrtZ(int m);
+
 
 //Функции Афинного шифра
 
@@ -34,19 +34,19 @@ bool decrAffineFile(const string& input, const string& output, int a, int b, int
 
 unsigned char** genMatrixPleyfair(string key, int mod);
 void deleteMatrix(unsigned char** matrix, int mod);
-vector<string> genBigrams(string text, unsigned char marker);
-pair<int, int> findCoordSymb(unsigned char** pm, unsigned char symb, int mod);
-unsigned char findSymbForCoord(unsigned char** pm, pair<int, int> coord, int mod);
-vector<string> encrBigrams(unsigned char** pm, vector<string> bigrams, int mod);
-string encrText(vector<string> encrBigrams);
-vector<string> genEncrBigrams(string encrText, unsigned char marker);
-vector<string> decrBigrams(unsigned char** pm, vector<string>EncrBigrams, int mod);
-string decrText(vector<string> decrBigrams, unsigned char marker);
+vector<string> genBigramsPleyfair(string text, unsigned char marker);
+pair<int, int> findCoordSymbPleyfair(unsigned char** pm, unsigned char symb, int mod);
+unsigned char findSymbForCoordPleyfair(unsigned char** pm, pair<int, int> coord, int mod);
+vector<string> encrBigramsPleyfair(unsigned char** pm, vector<string> bigrams, int mod);
+string encrTextPleyfair(vector<string> encrBigramsPleyfair);
+vector<string> genEncrBigramsPleyfair(string encrTextPleyfair, unsigned char marker);
+vector<string> decrBigramsPleyfair(unsigned char** pm, vector<string>encrBigramsPleyfair, int mod);
+string decrTextPleyfair(vector<string> decrBigramsPleyfair, unsigned char marker);
 void Pleyf(string key, string text, unsigned char marker, int mod);
 string fileToHex(const string& filename);
 void hexToFile(const string& hex, const string& filename);
-bool encrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod);
-bool decrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod);
+bool encrFilePleyfair(const string& input, const string& output, string key, unsigned char marker, int mod);
+bool decrFilePleyfair(const string& input, const string& output, string key, unsigned char marker, int mod);
 
 //Генератор ключей для шифров
 pair<int, int> genAfinKey(int m);

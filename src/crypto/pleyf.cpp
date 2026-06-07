@@ -1,16 +1,5 @@
 #include "crypto.h"
 
-int sqrtZ(int m) {
-	if (m < 0) return -1; 
-	if (m == 0 || m == 1) return m;
-
-	for (int i = 1; i <= m / i; ++i) {  
-		if (i * i == m) {
-			return i;
-		}
-	}
-	return -1;
-}
 
 unsigned char** genMatrixPleyfair(string key, int mod) {
 	try {
@@ -61,7 +50,7 @@ void deleteMatrix(unsigned char** matrix, int mod) {
 	}
 	delete[] matrix;
 }
-vector<string> genBigrams(string text, unsigned char marker) {
+vector<string> genBigramsPleyfair(string text, unsigned char marker) {
 	vector<string> bigrams;
 	string bg;
 	for (int i = 0; i < text.size(); ++i) {
@@ -86,7 +75,7 @@ vector<string> genBigrams(string text, unsigned char marker) {
 	return bigrams;
 }
 
-pair<int, int> findCoordSymb(unsigned char** pm, unsigned char symb, int mod) {
+pair<int, int> findCoordSymbPleyfair(unsigned char** pm, unsigned char symb, int mod) {
 	int m = sqrtZ(mod);
 	pair<int, int> coord;
 	for (int i = 0; i < m; ++i) {
@@ -99,7 +88,7 @@ pair<int, int> findCoordSymb(unsigned char** pm, unsigned char symb, int mod) {
 	}
 	return { -1, -1 };
 }
-unsigned char findSymbForCoord(unsigned char** pm, pair<int, int> coord, int mod) {
+unsigned char findSymbForCoordPleyfair(unsigned char** pm, pair<int, int> coord, int mod) {
 	int m = sqrtZ(mod);
 	unsigned char symb;
 	if (coord.first < m && coord.second < m) {
@@ -109,15 +98,15 @@ unsigned char findSymbForCoord(unsigned char** pm, pair<int, int> coord, int mod
 	return 0;
 }
 
-vector<string> encrBigrams(unsigned char** pm, vector<string> bigrams, int mod) {
+vector<string> encrBigramsPleyfair(unsigned char** pm, vector<string> bigrams, int mod) {
 	int m = sqrtZ(mod);
-	vector<string> encrBigrams;
+	vector<string> encrBigramsPleyfair;
 	string encrBigram;
 	for (string item : bigrams) {
 		unsigned char symb0 = item[0];
 		unsigned char symb1 = item[1];
-		pair<int, int> coordSymb0 = findCoordSymb(pm, symb0, mod);
-		pair<int, int> coordSymb1 = findCoordSymb(pm, symb1, mod);
+		pair<int, int> coordSymb0 = findCoordSymbPleyfair(pm, symb0, mod);
+		pair<int, int> coordSymb1 = findCoordSymbPleyfair(pm, symb1, mod);
 		if (coordSymb0.first == coordSymb1.first) {
 			coordSymb0.second = (coordSymb0.second + 1) % m;
 			coordSymb1.second = (coordSymb1.second + 1) % m;
@@ -131,38 +120,38 @@ vector<string> encrBigrams(unsigned char** pm, vector<string> bigrams, int mod) 
 			coordSymb0.second = coordSymb1.second;
 			coordSymb1.second = temp;
 		}
-		symb0 = findSymbForCoord(pm, coordSymb0, mod);
-		symb1 = findSymbForCoord(pm, coordSymb1, mod);
+		symb0 = findSymbForCoordPleyfair(pm, coordSymb0, mod);
+		symb1 = findSymbForCoordPleyfair(pm, coordSymb1, mod);
 		encrBigram.push_back(symb0);
 		encrBigram.push_back(symb1);
-		encrBigrams.push_back(encrBigram);
+		encrBigramsPleyfair.push_back(encrBigram);
 		encrBigram.clear();
 	}
-	return encrBigrams;
+	return encrBigramsPleyfair;
 }
 
-string encrText(vector<string> encrBigrams) {
+string encrTextPleyfair(vector<string> encrBigramsPleyfair) {
 	string text;
-	for (string item : encrBigrams) {
+	for (string item : encrBigramsPleyfair) {
 		text.append(item);
 	}
 	return text;
 }
 
-vector<string> genEncrBigrams(string encrText, unsigned char marker) {
-	vector<string> encrBigrams = genBigrams(encrText, marker);
-	return encrBigrams;
+vector<string> genEncrBigramsPleyfair(string encrTextPleyfair, unsigned char marker) {
+	vector<string> encrBigramsPleyfair = genBigramsPleyfair(encrTextPleyfair, marker);
+	return encrBigramsPleyfair;
 }
 
-vector<string> decrBigrams(unsigned char** pm, vector<string>EncrBigrams, int mod) {
+vector<string> decrBigramsPleyfair(unsigned char** pm, vector<string>encrBigramsPleyfair, int mod) {
 	int m = sqrtZ(mod);
-	vector<string> decrBigrams;
+	vector<string> decrBigramsPleyfair;
 	string decrBigram;
-	for (string item : EncrBigrams) {
+	for (string item : encrBigramsPleyfair) {
 		unsigned char symb0 = item[0];
 		unsigned char symb1 = item[1];
-		pair<int, int> coordSymb0 = findCoordSymb(pm, symb0, mod);
-		pair<int, int> coordSymb1 = findCoordSymb(pm, symb1, mod);
+		pair<int, int> coordSymb0 = findCoordSymbPleyfair(pm, symb0, mod);
+		pair<int, int> coordSymb1 = findCoordSymbPleyfair(pm, symb1, mod);
 		if (coordSymb0.first == coordSymb1.first) {
 			coordSymb0.second = (coordSymb0.second - 1 + m) % m;
 			coordSymb1.second = (coordSymb1.second - 1 + m) % m;
@@ -176,19 +165,19 @@ vector<string> decrBigrams(unsigned char** pm, vector<string>EncrBigrams, int mo
 			coordSymb0.second = coordSymb1.second;
 			coordSymb1.second = temp;
 		}
-		symb0 = findSymbForCoord(pm, coordSymb0, mod);
-		symb1 = findSymbForCoord(pm, coordSymb1, mod);
+		symb0 = findSymbForCoordPleyfair(pm, coordSymb0, mod);
+		symb1 = findSymbForCoordPleyfair(pm, coordSymb1, mod);
 		decrBigram.push_back(symb0);
 		decrBigram.push_back(symb1);
-		decrBigrams.push_back(decrBigram);
+		decrBigramsPleyfair.push_back(decrBigram);
 		decrBigram.clear();
 	}
-	return decrBigrams;
+	return decrBigramsPleyfair;
 }
 
-string decrText(vector<string> decrBigrams, unsigned char marker) {
+string decrTextPleyfair(vector<string> decrBigramsPleyfair, unsigned char marker) {
 	string text;
-	for (string item : decrBigrams) {
+	for (string item : decrBigramsPleyfair) {
 		for (unsigned char symb : item) {
 			if (symb != marker) text.push_back(symb);
 		}
@@ -197,14 +186,14 @@ string decrText(vector<string> decrBigrams, unsigned char marker) {
 }
 void Pleyf(string key, string text, unsigned char marker, int mod) {
 	unsigned char** pm = genMatrixPleyfair(key, mod);
-	vector<string> bgr = genBigrams(text, marker);
-	vector<string> encrBgr = encrBigrams(pm, bgr, mod);
-	string encrTxt = encrText(encrBgr);
+	vector<string> bgr = genBigramsPleyfair(text, marker);
+	vector<string> encrBgr = encrBigramsPleyfair(pm, bgr, mod);
+	string encrTxt = encrTextPleyfair(encrBgr);
 	cout << encrTxt << endl;
-	vector<string> genEncrBgr = genEncrBigrams(encrTxt, marker);
-	vector<string> decrBgr = decrBigrams(pm, genEncrBgr, mod);
+	vector<string> genEncrBgr = genEncrBigramsPleyfair(encrTxt, marker);
+	vector<string> decrBgr = decrBigramsPleyfair(pm, genEncrBgr, mod);
 	deleteMatrix(pm, mod);
-	string decrTxt = decrText(decrBgr, marker);
+	string decrTxt = decrTextPleyfair(decrBgr, marker);
 	cout << decrTxt << endl;
 }
 
@@ -255,15 +244,15 @@ void hexToFile(const string& hex, const string& filename) {
 }
 
 
-bool encrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod) {
+bool encrFilePleyfair(const string& input, const string& output, string key, unsigned char marker, int mod) {
 	try {
 		string hex = fileToHex(input);
 		if (hex.empty()) throw runtime_error("Файл пуст или не прочитан");
 		unsigned char** pm = genMatrixPleyfair(key, mod);
 		if (!pm) throw runtime_error("Не удалось создать матрицу");
-		vector<string> bgr = genBigrams(hex, marker);
-		vector<string> encrBgr = encrBigrams(pm, bgr, mod);
-		string encr = encrText(encrBgr);
+		vector<string> bgr = genBigramsPleyfair(hex, marker);
+		vector<string> encrBgr = encrBigramsPleyfair(pm, bgr, mod);
+		string encr = encrTextPleyfair(encrBgr);
 
 		ofstream out(output, ios::binary);
 		if (!out) throw runtime_error("Не удалось создать выходной файл: " + output);
@@ -279,7 +268,7 @@ bool encrPleyfFile(const string& input, const string& output, string key, unsign
 }
 
 
-bool decrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod) {
+bool decrFilePleyfair(const string& input, const string& output, string key, unsigned char marker, int mod) {
 	try {
 		unsigned char** pm = genMatrixPleyfair(key, mod);
 		if (!pm) throw runtime_error("Не удалось создать матрицу");
@@ -288,9 +277,9 @@ bool decrPleyfFile(const string& input, const string& output, string key, unsign
 		string encrData((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
 		in.close();
 
-		vector<string> encrBgr = genEncrBigrams(encrData, marker);
-		vector<string> decrBgr = decrBigrams(pm, encrBgr, mod);
-		string decrHex = decrText(decrBgr, marker);
+		vector<string> encrBgr = genEncrBigramsPleyfair(encrData, marker);
+		vector<string> decrBgr = decrBigramsPleyfair(pm, encrBgr, mod);
+		string decrHex = decrTextPleyfair(decrBgr, marker);
 
 
 		hexToFile(decrHex, output);

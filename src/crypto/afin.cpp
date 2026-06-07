@@ -16,25 +16,25 @@ bool isPrimeAM(int a, int m) {
 
 string encrAffineText(const string& text, int a, int b, int m) {
 
-	string encrText;
+	string encrTextPleyfair;
 
 	for (unsigned char item : text) {
-		encrText.push_back(encrAffineByte(a, b, m, item));
+		encrTextPleyfair.push_back(encrAffineByte(a, b, m, item));
 	}
 	
-	return encrText;
+	return encrTextPleyfair;
 }
 
 string decrAffineText(const string& text, int a, int b, int m) {
 
-	string decrText;
+	string decrTextPleyfair;
 	int d = ObrEvk(a, m, 'u');
 
 	for (unsigned char item : text) {
-		decrText.push_back(decrAffineByte(d, b, m, item));
+		decrTextPleyfair.push_back(decrAffineByte(d, b, m, item));
 	}
 
-	return decrText;
+	return decrTextPleyfair;
 }
 
 bool encrAffineFile(const string& input, const string& output, int a, int b, int m) {

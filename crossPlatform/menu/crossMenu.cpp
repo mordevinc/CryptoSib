@@ -162,9 +162,9 @@ void CrossPlatform::choiceFuncOfTextPleyfair() {
         string hexText = strToHex(text);
         
         unsigned char** pm = genMatrixPleyfair(key, MODULE);
-        vector<string> bgr = genBigrams(hexText, marker);
-        vector<string> encrBgr = encrBigrams(pm, bgr, MODULE);
-        string encryptedData = encrText(encrBgr);
+        vector<string> bgr = genBigramsPleyfair(hexText, marker);
+        vector<string> encrBgr = encrBigramsPleyfair(pm, bgr, MODULE);
+        string encryptedData = encrTextPleyfair(encrBgr);
         deleteMatrix(pm, MODULE);
         
         cout << "Зашифрованный текст: ";
@@ -195,9 +195,9 @@ void CrossPlatform::choiceFuncOfTextPleyfair() {
         string encryptedData = hexToStr(cleanHex);
         
         unsigned char** pm = genMatrixPleyfair(key, MODULE);
-        vector<string> encrBgr = genEncrBigrams(encryptedData, marker);
-        vector<string> decrBgr = decrBigrams(pm, encrBgr, MODULE);
-        string decryptedHex = decrText(decrBgr, marker);
+        vector<string> encrBgr = genEncrBigramsPleyfair(encryptedData, marker);
+        vector<string> decrBgr = decrBigramsPleyfair(pm, encrBgr, MODULE);
+        string decryptedHex = decrTextPleyfair(decrBgr, marker);
         deleteMatrix(pm, MODULE);
         
         string originalText = hexToStr(decryptedHex);
@@ -426,7 +426,7 @@ void CrossPlatform::choiceFuncOfFilePleyfair() {
 			}
 		}
 
-		if (encrPleyfFile(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, key, marker, MODULE)) {
+		if (encrFilePleyfair(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, key, marker, MODULE)) {
 			cout << "Файл успешно зашифрован!" << endl;
 			cout << "Зашифрованный файл находится по пути: " << ENCR_DIR + pathFileEncr << endl;
 		}
@@ -479,7 +479,7 @@ void CrossPlatform::choiceFuncOfFilePleyfair() {
 			}
 		}
 
-		if (decrPleyfFile(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, key, marker, MODULE)) {
+		if (decrFilePleyfair(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, key, marker, MODULE)) {
 			cout << "Файл успешно расшифрован!" << endl;
 			cout << "Расшифрованный файл находится по пути: " << DECR_DIR + pathFileDecr << endl;
 		}
