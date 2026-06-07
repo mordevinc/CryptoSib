@@ -10,45 +10,54 @@ void setConsoleEncoding() {
 	setlocale(LC_ALL, "ru_RU.UTF-8");
 #endif
 }
-void showMenu(){
-	int choice;
 
-	do {
+int getChoice(int min, int max, const string& prompt) {
+	int val;
+	while (true) {
+		cout << prompt;
+		if (cin >> val && val >= min && val <= max) {
+			cin.ignore();
+			return val;
+		}
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Ошибка: введите число от " << min << " до " << max << endl;
+	}
+}
+
+void Windows::showMenu(){
+	while (true) {
+
 		cout << "Выберите режим работы приложения" << endl;
 		cout << "1) Шифрование/дешифрование текста" << endl;
 		cout << "2) Шифрование/дешифрование файла" << endl;
 		cout << "3) Генератор ключей" << endl;
 		cout << "Ваш выбор: ";
 
-		if (!(cin >> choice)) {
-			cout << "Ошибка: Введите число от 1 до 4!" << endl;
-			cin.clear();  // Сбрасываем флаг ошибки
-			cin.ignore(1000, '\n');  // Очищаем буфер
-			continue;  // Повторяем ввод
-		}
-		cin.ignore();
+		int choice = getChoice(1, 4, " ");
+
 		cout << endl;
 
 		switch (FunctionsOfProgram(choice)) {
 		case FunctionsOfProgram::TEXT:
-			choiceFuncOfText();
+			Windows::choiceFuncOfText();
 			break;
 		case FunctionsOfProgram::FILE:
-			choiceFuncOfFile();
+			Windows::choiceFuncOfFile();
 			break;
 		case FunctionsOfProgram::KEY:
-
+			Windows::choiceKeyGen();
 			break;
 		case FunctionsOfProgram::OFF:
 			std::cout << "Выход из приложения...\n";
+			return;
 			break;
-		default: std::cout << "ОШИБКА\n";
+		default: cout << "ОШИБКА\n";
 		}
-	} while (choice != 4);
+	}
 }
 
-void choiceFuncOfTextAffine() {
-	int choice;
+void Windows::choiceFuncOfTextAffine() {
 	cout << "Введите ключ 'a'" << endl;
 	uint64_t a;
 	while (true) {
@@ -64,19 +73,11 @@ void choiceFuncOfTextAffine() {
 	uint64_t b;
 	cin >> b;
 	cin.ignore();
-	while (true) {
 		cout << "\nВыбор операции:" << endl;
 		cout << "1) Шифрование текста" << endl;
 		cout << "2) Расшифрование текста" << endl;
 		cout << "Введите Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
-
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-	}
+		int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
 	switch (FunctionsOfText(choice)) {
 	case FunctionsOfText::ENCRYPT_TEXT: {
 		cout << "Введите текст для шифрования" << endl;
@@ -97,8 +98,7 @@ void choiceFuncOfTextAffine() {
 	default: cout << "ОШИБКА" << endl;
 	}
 }
-void choiceFuncOfTextPleyfair() {
-	int choice;
+void Windows::choiceFuncOfTextPleyfair() {
 	string key;
 	unsigned char marker;
 	while (true) {
@@ -131,18 +131,14 @@ void choiceFuncOfTextPleyfair() {
 		}
 
 	}
-	while (true) {
-		cout << "\nВыбор операции:" << endl;
-		cout << "1) Шифрование текста" << endl;
-		cout << "2) Расшифрование текста" << endl;
-		cout << "Введите Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-	}
+
+	cout << "\nВыбор операции:" << endl;
+	cout << "1) Шифрование текста" << endl;
+	cout << "2) Расшифрование текста" << endl;
+	cout << "Введите Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (FunctionsOfText(choice)) {
 	case FunctionsOfText::ENCRYPT_TEXT: {
 		string text;
@@ -205,8 +201,7 @@ void choiceFuncOfTextPleyfair() {
 	default: cout << "ОШИБКА" << endl;
 	}
 }
-void choiceFuncOfFileAffine() {
-	int choice;
+void Windows::choiceFuncOfFileAffine() {
 	cout << "Введите ключ 'a'" << endl;
 	uint64_t a;
 	while (true) {
@@ -222,19 +217,14 @@ void choiceFuncOfFileAffine() {
 	uint64_t b;
 	cin >> b;
 	cin.ignore();
-	while (true) {
-		cout << "\nВыбор операции:" << endl;
-		cout << "1) Шифрование файла" << endl;
-		cout << "2) Расшифрование файла" << endl;
-		cout << "Введите Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-	}
+	cout << "\nВыбор операции:" << endl;
+	cout << "1) Шифрование файла" << endl;
+	cout << "2) Расшифрование файла" << endl;
+	cout << "Введите Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (FunctionsOfFile(choice)) {
 	case FunctionsOfFile::ENCRYPT_FILE: {
 		string pathFileToEncr;
@@ -345,8 +335,7 @@ void choiceFuncOfFileAffine() {
 	}
 }
 
-void choiceFuncOfFilePleyfair() {
-	int choice;
+void Windows::choiceFuncOfFilePleyfair() {
 	string key;
 	unsigned char marker;
 	while (true) {
@@ -379,19 +368,14 @@ void choiceFuncOfFilePleyfair() {
 		}
 
 	}
-	while (true) {
-		cout << "\nВыбор операции:" << endl;
-		cout << "1) Шифрование файла" << endl;
-		cout << "2) Расшифрование файла" << endl;
-		cout << "Введите Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-	}
+	cout << "\nВыбор операции:" << endl;
+	cout << "1) Шифрование файла" << endl;
+	cout << "2) Расшифрование файла" << endl;
+	cout << "Введите Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (FunctionsOfFile(choice)) {
 	case FunctionsOfFile::ENCRYPT_FILE: {
 		string pathFileToEncr;
@@ -503,54 +487,65 @@ void choiceFuncOfFilePleyfair() {
 	}
 }
 
-void choiceFuncOfText() {
-	int choice;
-	while (true) {
-		cout << "\nВыберите алгоритм для шифрования/дешифрования текста:" << endl;
-		cout << "1) Афинный шифр" << endl;
-		cout << "2) Шифр Плейфера" << endl;
-		cout << "Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
+void Windows::choiceFuncOfText() {
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: Введите 1 или 2" << endl;
-	}
+	cout << "\nВыберите алгоритм для шифрования/дешифрования текста:" << endl;
+	cout << "1) Афинный шифр" << endl;
+	cout << "2) Шифр Плейфера" << endl;
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+	
 	switch (Algorithms(choice)) {
 	case Algorithms::AFFINE:
-		choiceFuncOfTextAffine();
+		Windows::choiceFuncOfTextAffine();
 		break;
 	case Algorithms::PLAYFAIR:
-		choiceFuncOfTextPleyfair();
+		Windows::choiceFuncOfTextPleyfair();
 		break;
 	default: std::cout << "ERROR\n";
 	}
 }
-void choiceFuncOfFile() {
-	int choice;
-	while (true) {
-		cout << "\nВыберите алгоритм для шифрования/дешифрования файла:" << endl;
-		cout << "1) Афинный шифр" << endl;
-		cout << "2) Шифр Плейфера" << endl;
-		cout << "Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
+void Windows::choiceFuncOfFile() {
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: Введите 1 или 2" << endl;
-	}
+	cout << "\nВыберите алгоритм для шифрования/дешифрования файла:" << endl;
+	cout << "1) Афинный шифр" << endl;
+	cout << "2) Шифр Плейфера" << endl;
+	cout << "Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (Algorithms(choice)) {
 	case Algorithms::AFFINE:
-		choiceFuncOfFileAffine();
+		Windows::choiceFuncOfFileAffine();
 		break;
 	case Algorithms::PLAYFAIR:
-		choiceFuncOfFilePleyfair();
+		Windows::choiceFuncOfFilePleyfair();
 		break;
 	default: std::cout << "ОШИБКА\n";
 	}
 }
 
+void Windows::choiceKeyGen() {
+
+	cout << "\nВыберите алгоритм для генерации ключа" << endl;
+	cout << "1) Афинный шифр" << endl;
+	cout << "2) Шифр Плейфера" << endl;
+	cout << "Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
+	switch (Algorithms(choice)) {
+	case Algorithms::AFFINE:
+	{
+		pair<int, int> keys = genAfinKey(MODULE);
+		cout << "Ключ 'a' = " << keys.first << ", ключ 'b' = " << keys.second << endl;
+		break;
+	}
+	case Algorithms::PLAYFAIR:
+	{
+		cout << "Ключ: " << genPleyfairKeyRead(MODULE) << endl;
+		break;
+	}
+	default: std::cout << "ОШИБКА\n";
+	}
+}

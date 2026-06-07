@@ -37,14 +37,22 @@ enum class FunctionsOfFile {
 // Установка кодировки консоли
 void setConsoleEncoding();
 
-void showMenu();
+int getChoice(int min, int max, const string& prompt);
 
-void choiceFuncOfTextAffine();
-void choiceFuncOfTextPleyfair();
-void choiceFuncOfFileAffine();
-void choiceFuncOfFilePleyfair();
+class Windows {
 
-void choiceFuncOfText(); 
-void choiceFuncOfFile();
+public:
+	void showMenu();
+	
+private:
+	void choiceFuncOfTextAffine();
+	void choiceFuncOfTextPleyfair();
+	void choiceFuncOfFileAffine();
+	void choiceFuncOfFilePleyfair();
 
+	void choiceFuncOfText();
+	void choiceFuncOfFile();
+
+	void choiceKeyGen();
+};
 #endif

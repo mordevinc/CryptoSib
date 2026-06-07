@@ -12,6 +12,8 @@
 #include <iomanip>
 #include <cstdint>
 #include <filesystem>
+#include <random>
+#include <chrono>
 
 namespace fs = std::filesystem;
 using namespace std;
@@ -45,4 +47,10 @@ string fileToHex(const string& filename);
 void hexToFile(const string& hex, const string& filename);
 bool encrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod);
 bool decrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod);
+
+//Генератор ключей для шифров
+pair<int, int> genAfinKey(int m);
+string genPleyfairKey(int m);
+string genPleyfairKeyRead(int m);
+
 #endif

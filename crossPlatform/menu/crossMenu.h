@@ -5,16 +5,22 @@
 #include "../crypto/crossCrypto.h"
 #include "../../src/menu/menu.h"
 
+class CrossPlatform {
 
-void crosspShowMenu();
+public:
+	void crosspShowMenu();
 
-void crosspChoiceFuncOfTextAffine();
-void crosspChoiceFuncOfTextPleyfair();
-void crosspChoiceFuncOfFileAffine();
-void crosspChoiceFuncOfFilePleyfair();
+private:
+	void choiceFuncOfTextAffine();
+	void choiceFuncOfTextPleyfair();
+	void choiceFuncOfFileAffine();
+	void choiceFuncOfFilePleyfair();
 
-void crosspChoiceFuncOfText(); 
-void crosspChoiceFuncOfFile();
+	void choiceFuncOfText();
+	void choiceFuncOfFile();
 
+	void choiceKeyGen();
+
+};
 
 #endif

@@ -7,10 +7,11 @@
 int main() {
 	setConsoleEncoding();
 	#ifdef _WIN32
-	showMenu();
+	Windows obj;
+	obj.showMenu();
 	#else
-	crosspShowMenu();
+	CrossPlatform obj;
+	obj.crosspShowMenu();
 	#endif
-	showMenu();
 	return 0;
 }

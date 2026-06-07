@@ -1,45 +1,38 @@
 #include "crossMenu.h"
 
 
-void crosspShowMenu(){
-	int choice;
+void CrossPlatform::crosspShowMenu(){
 
-	do {
+	while(true) {
 		cout << "Выберите режим работы приложения" << endl;
 		cout << "1) Шифрование/дешифрование текста" << endl;
 		cout << "2) Шифрование/дешифрование файла" << endl;
 		cout << "3) Генератор ключей" << endl;
+		cout << "4) Выход из приложения" << endl;
 		cout << "Ваш выбор: ";
 
-		if (!(cin >> choice)) {
-			cout << "Ошибка: Введите число от 1 до 4!" << endl;
-			cin.clear();  // Сбрасываем флаг ошибки
-			cin.ignore(1000, '\n');  // Очищаем буфер
-			continue;  // Повторяем ввод
-		}
-		cin.ignore();
-		cout << endl;
+		int choice = getChoice(1, 4, "Введите Ваш выбор (от 1 до 4): ");
 
 		switch (FunctionsOfProgram(choice)) {
 		case FunctionsOfProgram::TEXT:
-			crosspChoiceFuncOfText();
+			CrossPlatform::choiceFuncOfText();
 			break;
 		case FunctionsOfProgram::FILE:
-			crosspChoiceFuncOfFile();
+			CrossPlatform::choiceFuncOfFile();
 			break;
 		case FunctionsOfProgram::KEY:
-
+			CrossPlatform::choiceKeyGen();
 			break;
 		case FunctionsOfProgram::OFF:
 			std::cout << "Выход из приложения...\n";
+			return;
 			break;
 		default: std::cout << "ОШИБКА\n";
 		}
-	} while (choice != 4);
+	}
 }
 
-void crosspChoiceFuncOfTextAffine() {
-    int choice;
+void CrossPlatform::choiceFuncOfTextAffine() {
     cout << "Введите ключ 'a'" << endl;
     uint64_t a;
     while (true) {
@@ -52,16 +45,12 @@ void crosspChoiceFuncOfTextAffine() {
     cin >> b;
     cin.ignore();
     
-    while (true) {
-        cout << "\nВыбор операции:" << endl;
-        cout << "1) Шифрование текста" << endl;
-        cout << "2) Расшифрование текста" << endl;
-        cout << "Введите Ваш выбор (1 или 2): ";
-        cin >> choice;
-        cin.ignore();
-        if (choice == 1 || choice == 2) break;
-        cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-    }
+    cout << "\nВыбор операции:" << endl;
+    cout << "1) Шифрование текста" << endl;
+    cout << "2) Расшифрование текста" << endl;
+    cout << "Введите Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
     
     switch (FunctionsOfText(choice)) {
     case FunctionsOfText::ENCRYPT_TEXT: {
@@ -103,8 +92,7 @@ case FunctionsOfText::DECRYPT_TEXT: {
 }
 
 
-void crosspChoiceFuncOfTextPleyfair() {
-    int choice;
+void CrossPlatform::choiceFuncOfTextPleyfair() {
     string key;
     unsigned char marker;
     
@@ -158,20 +146,12 @@ void crosspChoiceFuncOfTextPleyfair() {
     }
     
     // Выбор операции
-    string choiceStr;
-    while (true) {
-        cout << "\nВыбор операции:" << endl;
-        cout << "1) Шифрование текста" << endl;
-        cout << "2) Расшифрование текста" << endl;
-        cout << "Введите Ваш выбор (1 или 2): ";
-        getline(cin, choiceStr);
+    cout << "\nВыбор операции:" << endl;
+    cout << "1) Шифрование текста" << endl;
+    cout << "2) Расшифрование текста" << endl;
+    cout << "Введите Ваш выбор (1 или 2): ";
         
-        if (choiceStr == "1" || choiceStr == "2") {
-            choice = stoi(choiceStr);
-            break;
-        }
-        cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-    }
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
     
     switch (FunctionsOfText(choice)) {
     case FunctionsOfText::ENCRYPT_TEXT: {
@@ -228,8 +208,7 @@ void crosspChoiceFuncOfTextPleyfair() {
     }
 }
 
-void crosspChoiceFuncOfFileAffine() {
-	int choice;
+void CrossPlatform::choiceFuncOfFileAffine() {
 	cout << "Введите ключ 'a'" << endl;
 	uint64_t a;
 	while (true) {
@@ -245,19 +224,13 @@ void crosspChoiceFuncOfFileAffine() {
 	uint64_t b;
 	cin >> b;
 	cin.ignore();
-	while (true) {
-		cout << "\nВыбор операции:" << endl;
-		cout << "1) Шифрование файла" << endl;
-		cout << "2) Расшифрование файла" << endl;
-		cout << "Введите Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
+	cout << "\nВыбор операции:" << endl;
+	cout << "1) Шифрование файла" << endl;
+	cout << "2) Расшифрование файла" << endl;
+	cout << "Введите Ваш выбор (1 или 2): ";
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-	}
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (FunctionsOfFile(choice)) {
 	case FunctionsOfFile::ENCRYPT_FILE: {
 		string pathFileToEncr;
@@ -368,8 +341,7 @@ void crosspChoiceFuncOfFileAffine() {
 	}
 }
 
-void crosspChoiceFuncOfFilePleyfair() {
-	int choice;
+void CrossPlatform::choiceFuncOfFilePleyfair() {
 	string key;
 	unsigned char marker;
 	while (true) {
@@ -402,19 +374,13 @@ void crosspChoiceFuncOfFilePleyfair() {
 		}
 
 	}
-	while (true) {
-		cout << "\nВыбор операции:" << endl;
-		cout << "1) Шифрование файла" << endl;
-		cout << "2) Расшифрование файла" << endl;
-		cout << "Введите Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
+	cout << "\nВыбор операции:" << endl;
+	cout << "1) Шифрование файла" << endl;
+	cout << "2) Расшифрование файла" << endl;
+	cout << "Введите Ваш выбор (1 или 2): ";
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: пожалуйста, введите 1 или 2" << endl;
-	}
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (FunctionsOfFile(choice)) {
 	case FunctionsOfFile::ENCRYPT_FILE: {
 		string pathFileToEncr;
@@ -526,53 +492,63 @@ void crosspChoiceFuncOfFilePleyfair() {
 	}
 }
 
-void crosspChoiceFuncOfText() {
-	int choice;
-	while (true) {
-		cout << "\nВыберите алгоритм для шифрования/дешифрования текста:" << endl;
-		cout << "1) Афинный шифр" << endl;
-		cout << "2) Шифр Плейфера" << endl;
-		cout << "Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
+void CrossPlatform::choiceFuncOfText() {
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: Введите 1 или 2" << endl;
-	}
+	cout << "\nВыберите алгоритм для шифрования/дешифрования текста:" << endl;
+	cout << "1) Афинный шифр" << endl;
+	cout << "2) Шифр Плейфера" << endl;
+	cout << "Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (Algorithms(choice)) {
 	case Algorithms::AFFINE:
-		crosspChoiceFuncOfTextAffine();
+		CrossPlatform::choiceFuncOfTextAffine();
 		break;
 	case Algorithms::PLAYFAIR:
-		crosspChoiceFuncOfTextPleyfair();
+		CrossPlatform::choiceFuncOfTextPleyfair();
 		break;
 	default: std::cout << "ERROR\n";
 	}
 }
-void crosspChoiceFuncOfFile() {
-	int choice;
-	while (true) {
-		cout << "\nВыберите алгоритм для шифрования/дешифрования файла:" << endl;
-		cout << "1) Афинный шифр" << endl;
-		cout << "2) Шифр Плейфера" << endl;
-		cout << "Ваш выбор (1 или 2): ";
-		cin >> choice;
-		cin.ignore();
+void CrossPlatform::choiceFuncOfFile() {
 
-		if (choice == 1 || choice == 2) {
-			break;
-		}
-		cout << "Ошибка: Введите 1 или 2" << endl;
-	}
+	cout << "\nВыберите алгоритм для шифрования/дешифрования файла:" << endl;
+	cout << "1) Афинный шифр" << endl;
+	cout << "2) Шифр Плейфера" << endl;
+	cout << "Ваш выбор (1 или 2): ";
+
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+
 	switch (Algorithms(choice)) {
 	case Algorithms::AFFINE:
-		crosspChoiceFuncOfFileAffine();
+		CrossPlatform::choiceFuncOfFileAffine();
 		break;
 	case Algorithms::PLAYFAIR:
-		crosspChoiceFuncOfFilePleyfair();
+		CrossPlatform::choiceFuncOfFilePleyfair();
 		break;
+	default: std::cout << "ОШИБКА\n";
+	}
+}
+
+void CrossPlatform::choiceKeyGen() {
+	cout << "\nВыберите алгоритм для генерации ключа" << endl;
+	cout << "1) Афинный шифр" << endl;
+	cout << "2) Шифр Плейфера" << endl;
+	cout << "Ваш выбор (1 или 2): ";
+	int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+	switch (Algorithms(choice)) {
+	case Algorithms::AFFINE:
+	{
+		pair<int, int> keys = genAfinKey(MODULE);
+		cout << "Ключ 'a' = " << keys.first << ", ключ 'b' = " << keys.second << endl;
+		break;
+	}
+	case Algorithms::PLAYFAIR:
+	{
+		cout << "Ключ: " << genPleyfairKeyRead(MODULE) << endl;
+		break;
+	}
 	default: std::cout << "ОШИБКА\n";
 	}
 }

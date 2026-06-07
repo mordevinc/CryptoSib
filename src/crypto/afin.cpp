@@ -60,7 +60,7 @@ bool encrAfinFile(const string& input, const string& output, int a, int b, int m
 		in.close();
 		return false;
 	}
-	if (!in || !out) return false;
+
 	char byte;
 	while (in.get(byte)) {
 		out.put(encrAfinByte(a, b, m, (unsigned char)byte));
@@ -95,7 +95,7 @@ bool decrAfinFile(const string& input, const string& output, int a, int b, int m
 		in.close();
 		return false;
 	}
-	if (!in || !out) return false;
+
 	char byte;
 	while (in.get(byte)) {
 		out.put(decrAfinByte(d, b, m, (unsigned char)byte));
