@@ -2,7 +2,7 @@
 #ifndef MENU_H
 #define MENU_H
 #include "../crypto/crypto.h"
-// Платформозависимые заголовки
+// РџР»Р°С‚С„РѕСЂРјРѕР·Р°РІРёСЃРёРјС‹Рµ Р·Р°РіРѕР»РѕРІРєРё
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN 
 #define NOGDI                
@@ -34,7 +34,7 @@ enum class FunctionsOfFile {
 	DECRYPT_FILE
 };
 
-// Установка кодировки консоли
+// РЈСЃС‚Р°РЅРѕРІРєР° РєРѕРґРёСЂРѕРІРєРё РєРѕРЅСЃРѕР»Рё
 void setConsoleEncoding();
 
 int getChoice(int min, int max, const string& prompt);

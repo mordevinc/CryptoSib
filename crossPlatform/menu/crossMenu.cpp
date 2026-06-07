@@ -161,7 +161,7 @@ void CrossPlatform::choiceFuncOfTextPleyfair() {
         
         string hexText = strToHex(text);
         
-        unsigned char** pm = genMatrixPleyf(key, MODULE);
+        unsigned char** pm = genMatrixPleyfair(key, MODULE);
         vector<string> bgr = genBigrams(hexText, marker);
         vector<string> encrBgr = encrBigrams(pm, bgr, MODULE);
         string encryptedData = encrText(encrBgr);
@@ -194,7 +194,7 @@ void CrossPlatform::choiceFuncOfTextPleyfair() {
         
         string encryptedData = hexToStr(cleanHex);
         
-        unsigned char** pm = genMatrixPleyf(key, MODULE);
+        unsigned char** pm = genMatrixPleyfair(key, MODULE);
         vector<string> encrBgr = genEncrBigrams(encryptedData, marker);
         vector<string> decrBgr = decrBigrams(pm, encrBgr, MODULE);
         string decryptedHex = decrText(decrBgr, marker);
@@ -275,7 +275,7 @@ void CrossPlatform::choiceFuncOfFileAffine() {
 				}
 			}
 		}
-		if (encrAfinFile(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, a, b, MODULE)) {
+		if (encrAffineFile(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, a, b, MODULE)) {
 			cout << "Файл успешно зашифрован!" << endl;
 			cout << "Зашифрованный файл находится по пути: " << ENCR_DIR + pathFileEncr << endl;
 		}
@@ -328,7 +328,7 @@ void CrossPlatform::choiceFuncOfFileAffine() {
 			}
 		}
 
-		if (decrAfinFile(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, a, b, MODULE)) {
+		if (decrAffineFile(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, a, b, MODULE)) {
 			cout << "Файл успешно расшифрован!" << endl;
 			cout << "Расшифрованный файл находится по пути: " << DECR_DIR + pathFileDecr << endl;
 		}

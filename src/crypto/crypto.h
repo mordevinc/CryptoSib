@@ -22,17 +22,17 @@ int sqrtZ(int m);
 
 //Функции Афинного шифра
 
-unsigned char encrAfinByte(int a, int b, int m, unsigned char x);
-unsigned char decrAfinByte(int d, int b, int m, unsigned char y);
+unsigned char encrAffineByte(int a, int b, int m, unsigned char x);
+unsigned char decrAffineByte(int d, int b, int m, unsigned char y);
 bool isPrimeAM(int a, int m);
 string encrAffineText(const string& text, int a, int b, int m);
 string decrAffineText(const string& text, int a, int b, int m);
-bool encrAfinFile(const string& input, const string& output, int a, int b, int m);
-bool decrAfinFile(const string& input, const string& output, int a, int b, int m);
+bool encrAffineFile(const string& input, const string& output, int a, int b, int m);
+bool decrAffineFile(const string& input, const string& output, int a, int b, int m);
 
 //Функции шифра Плейфера
 
-unsigned char** genMatrixPleyf(string key, int mod);
+unsigned char** genMatrixPleyfair(string key, int mod);
 void deleteMatrix(unsigned char** matrix, int mod);
 vector<string> genBigrams(string text, unsigned char marker);
 pair<int, int> findCoordSymb(unsigned char** pm, unsigned char symb, int mod);

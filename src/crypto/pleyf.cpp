@@ -12,41 +12,47 @@ int sqrtZ(int m) {
 	return -1;
 }
 
-unsigned char** genMatrixPleyf(string key, int mod) {
-	int m = sqrtZ(mod);
-	unsigned char** mp;
-	mp = new unsigned char* [m];
-	for (int i = 0; i < m; ++i) {
-		mp[i] = new unsigned char[m];
-	}
-	unordered_set<unsigned char> used;
-	int i = 0;
-	int j = 0;
-	for (unsigned char item : key) {
-		if (used.find(item) == used.end()) {
-			mp[i][j] = item;
-			used.insert(item);
-			++j;
-			if (j == m) {
-				j = 0;
-				++i;
-			}
-			if (i == m) return mp;
+unsigned char** genMatrixPleyfair(string key, int mod) {
+	try {
+		int m = sqrtZ(mod);
+		unsigned char** mp;
+		mp = new unsigned char* [m];
+		for (int i = 0; i < m; ++i) {
+			mp[i] = new unsigned char[m];
 		}
-	}
-	for (unsigned char symb = 0; symb < mod-1; ++symb) {
-		if (used.find(symb) == used.end()) {
-			mp[i][j] = symb;
-			used.insert(symb);
-			++j;
-			if (j == m) {
-				j = 0;
-				++i;
+		unordered_set<unsigned char> used;
+		int i = 0;
+		int j = 0;
+		for (unsigned char item : key) {
+			if (used.find(item) == used.end()) {
+				mp[i][j] = item;
+				used.insert(item);
+				++j;
+				if (j == m) {
+					j = 0;
+					++i;
+				}
+				if (i == m) return mp;
 			}
 		}
+		for (unsigned char symb = 0; symb < mod - 1; ++symb) {
+			if (used.find(symb) == used.end()) {
+				mp[i][j] = symb;
+				used.insert(symb);
+				++j;
+				if (j == m) {
+					j = 0;
+					++i;
+				}
+			}
+		}
+		if (used.find(mod - 1) == used.end()) mp[i][j] = mod - 1;
+		return mp;
 	}
-	if (used.find(mod-1) == used.end()) mp[i][j] = mod-1;
-	return mp;
+	catch (const bad_alloc& e) {
+		cerr << "Ошибка: недостаточно памяти для создания матрицы" << endl;
+		return nullptr;
+	}
 }
 void deleteMatrix(unsigned char** matrix, int mod) {
 	int m = sqrtZ(mod);
@@ -190,7 +196,7 @@ string decrText(vector<string> decrBigrams, unsigned char marker) {
 	return text;
 }
 void Pleyf(string key, string text, unsigned char marker, int mod) {
-	unsigned char** pm = genMatrixPleyf(key, mod);
+	unsigned char** pm = genMatrixPleyfair(key, mod);
 	vector<string> bgr = genBigrams(text, marker);
 	vector<string> encrBgr = encrBigrams(pm, bgr, mod);
 	string encrTxt = encrText(encrBgr);
@@ -205,58 +211,95 @@ void Pleyf(string key, string text, unsigned char marker, int mod) {
 
 // Преобразуем бинарный файл в HEX строку
 string fileToHex(const string& filename) {
-	ifstream in(filename, ios::binary);
-	string data((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
-	in.close();
+	try {
+		ifstream in(filename, ios::binary);
+		if (!in) throw runtime_error("Не удалось открыть файл: " + filename);
+		string data((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+		in.close();
 
-	ostringstream oss;
-	oss << hex << setfill('0');
-	for (unsigned char c : data) {
-		oss << setw(2) << (int)c;
+		ostringstream oss;
+		oss << hex << setfill('0');
+		for (unsigned char c : data) {
+			oss << setw(2) << (int)c;
+		}
+		return oss.str();
 	}
-	return oss.str();
+	catch (const exception& e) {
+		cerr << "Ошибка при чтении файла: " << e.what() << endl;
+		throw;
+	}
 }
 
 // Преобразуем HEX строку обратно в бинарный файл 
 void hexToFile(const string& hex, const string& filename) {
-	ofstream out(filename, ios::binary);
-	for (size_t i = 0; i < hex.size(); i += 2) {
-		char byte = (char)stoi(hex.substr(i, 2), nullptr, 16);
-		out.put(byte);
+	try {
+		ofstream out(filename, ios::binary);
+		if (!out) throw runtime_error("Не удалось создать файл: " + filename);
+		for (size_t i = 0; i < hex.size(); i += 2) {
+			if (i + 1 >= hex.size()) {
+				throw runtime_error("Некорректная HEX строка");
+			}
+			char byte = (char)stoi(hex.substr(i, 2), nullptr, 16);
+			out.put(byte);
+		}
+		out.close();
 	}
-	out.close();
+	catch (const invalid_argument& e) {
+		cerr << "Ошибка: неверный HEX символ" << endl;
+		throw;
+	}
+	catch (const out_of_range& e) {
+		cerr << "Ошибка: HEX значение вне диапазона" << endl;
+		throw;
+	}
 }
 
 
 bool encrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod) {
-	string hex = fileToHex(input);
+	try {
+		string hex = fileToHex(input);
+		if (hex.empty()) throw runtime_error("Файл пуст или не прочитан");
+		unsigned char** pm = genMatrixPleyfair(key, mod);
+		if (!pm) throw runtime_error("Не удалось создать матрицу");
+		vector<string> bgr = genBigrams(hex, marker);
+		vector<string> encrBgr = encrBigrams(pm, bgr, mod);
+		string encr = encrText(encrBgr);
 
-	unsigned char** pm = genMatrixPleyf(key, mod);
-	vector<string> bgr = genBigrams(hex, marker);
-	vector<string> encrBgr = encrBigrams(pm, bgr, mod);
-	string encr = encrText(encrBgr);
-
-	ofstream out(output, ios::binary);
-	out.write(encr.c_str(), encr.size());
-	out.close();
-	deleteMatrix(pm, mod);
-	return true;
+		ofstream out(output, ios::binary);
+		if (!out) throw runtime_error("Не удалось создать выходной файл: " + output);
+		out.write(encr.c_str(), encr.size());
+		out.close();
+		deleteMatrix(pm, mod);
+		return true;
+	}
+	catch (const exception& e) {
+		cerr << "Ошибка при шифровании файла: " << e.what() << endl;
+		return false;
+	}
 }
 
 
 bool decrPleyfFile(const string& input, const string& output, string key, unsigned char marker, int mod) {
-	unsigned char** pm = genMatrixPleyf(key, mod);
-	ifstream in(input, ios::binary);
-	string encrData((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
-	in.close();
+	try {
+		unsigned char** pm = genMatrixPleyfair(key, mod);
+		if (!pm) throw runtime_error("Не удалось создать матрицу");
+		ifstream in(input, ios::binary);
+		if (!in) throw runtime_error("Не удалось открыть файл: " + input);
+		string encrData((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+		in.close();
 
-	vector<string> encrBgr = genEncrBigrams(encrData, marker);
-	vector<string> decrBgr = decrBigrams(pm, encrBgr, mod);
-	string decrHex = decrText(decrBgr, marker);
+		vector<string> encrBgr = genEncrBigrams(encrData, marker);
+		vector<string> decrBgr = decrBigrams(pm, encrBgr, mod);
+		string decrHex = decrText(decrBgr, marker);
 
 
-	hexToFile(decrHex, output);
+		hexToFile(decrHex, output);
 
-	deleteMatrix(pm, mod);
-	return true;
+		deleteMatrix(pm, mod);
+		return true;
+	}
+	catch (const exception& e) {
+		cerr << "Ошибка при дешифровании файла: " << e.what() << endl;
+		return false;
+	}
 }
