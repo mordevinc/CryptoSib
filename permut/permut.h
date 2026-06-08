@@ -1,24 +1,30 @@
+#pragma once
 #ifndef PERMUT_H
 #define PERMUT_H
 
 #include <string> 
 #include <vector>
 
-class SimplePermutation {
-    private:
-        std::string key; // ключ для перестановки
-        std::vector<int> order; // порядок столбцов
-        void generateOrder(); // key -> order
-        std::vector<int> stringKeyToOrder(const std::string& strKey);
-    public:
-        SimplePermutation(const std::string& key);
-        std::string encryptString(const std::string& text);// шифрование строки для текста
-        std::string decryptString(const std::string& ciphertext);// дешифрование строки для текста
-        std::vector<char> encryptData(const std::vector<char>& data); // шифрование данных для файлов 
-        std::vector<char> decryptData(const std::vector<char>& data); // дешифрование данных для файлов
-        bool encryptFile(const std::string& inputFile, const std::string& outputFile);
-        bool decryptFile(const std::string& inputFile, const std::string& outputFile);
-        int getKeyLength() const { return order.size(); }
+struct PermutationCipher {
+    std::string key;
+    std::vector<int> order;
 };
 
-#endif
+void initPermutationCipher(PermutationCipher* cipher, const std::string& key);
+void generateOrder(PermutationCipher* cipher);
+std::vector<int> stringKeyToOrderPermutation(const std::string& strKey);
+bool isNumericKeyPermutation(const std::string& key);
+
+std::string encryptStringPermutation(const PermutationCipher* cipher, const std::string& text);
+std::string decryptStringPermutation(const PermutationCipher* cipher, const std::string& ciphertext);
+
+std::vector<char> encryptDataPermutation(const PermutationCipher* cipher, const std::vector<char>& data);
+std::vector<char> decryptDataPermutation(const PermutationCipher* cipher, const std::vector<char>& data);
+
+bool encryptFilePermutation(const PermutationCipher* cipher, const std::string& inputFile, const std::string& outputFile);
+bool decryptFilePermutation(const PermutationCipher* cipher, const std::string& inputFile, const std::string& outputFile);
+
+int getKeyLengthPermutation(const PermutationCipher* cipher);
+std::string getKeyPermutation(const PermutationCipher* cipher);
+
+#endif // PERMUT_H
