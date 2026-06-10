@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #define WIN32_LEAN_AND_MEAN           
 #include <windows.h>
 #ifdef AFFINE_EXPORTS
@@ -11,7 +12,7 @@
 
 extern "C" {
     int evk(int base, int mod);
-    int ObrEvk(int a, int b, char ret);
+    int extendEvk(int a, int b, char ret);
 }
 
 #include <fstream>

@@ -28,7 +28,7 @@ string encrAffineText(const string& text, int a, int b, int m) {
 string decrAffineText(const string& text, int a, int b, int m) {
 
 	string decrText;
-	int d = ObrEvk(a, m, 'u');
+	int d = extendEvk(a, m, 'u');
 
 	for (unsigned char item : text) {
 		decrText.push_back(decrAffineByte(d, b, m, item));
@@ -83,7 +83,7 @@ bool encrAffineFile(const string& input, const string& output, int a, int b, int
 }
 bool decrAffineFile(const string& input, const string& output, int a, int b, int m) {
 	try {
-		int d = ObrEvk(a, m, 'u');
+		int d = extendEvk(a, m, 'u');
 
 		fs::path outPath(output);
 		if (!outPath.parent_path().empty()) {

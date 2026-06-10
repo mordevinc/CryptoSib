@@ -11,7 +11,7 @@ int evk(int base, int mod) {
 	return a;
 }
 
-int ObrEvk(int a, int b, char ret) {
+int extendEvk(int a, int b, char ret) {
 	int oldU = 1;
 	int oldV = 0;
 	int u = 0;
