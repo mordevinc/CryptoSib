@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #define WIN32_LEAN_AND_MEAN           
 #include <windows.h>
 #ifdef AFFINE_EXPORTS
@@ -7,6 +6,13 @@
 #else
 #define AFFINE_API __declspec(dllimport)
 #endif
+
+#pragma comment(lib, "mathFunction.lib")
+
+extern "C" {
+    int evk(int base, int mod);
+    int ObrEvk(int a, int b, char ret);
+}
 
 #include <fstream>
 #include <iostream>

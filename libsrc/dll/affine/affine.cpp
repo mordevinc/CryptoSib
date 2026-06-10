@@ -1,54 +1,5 @@
 #include "affine.h"
 
-int evk(int base, int mod) {
-	int a = base;
-	int b = mod;
-	int oldB = 0;
-	while (b > 0)
-	{
-		oldB = b;
-		b = a % b;
-		a = oldB;
-	}
-	return a;
-}
-
-int ObrEvk(int a, int b, char ret) {
-	int oldU = 1;
-	int oldV = 0;
-	int u = 0;
-	int v = 1;
-	int d = 0;
-	int q = 0;
-	int r = 0;
-	int c = a;
-	int m = b;
-	int tempU = 0;
-	int tempV = 0;
-	do {
-		r = c % m;
-		q = c / m;
-		c = m;
-		m = r;
-		if (r <= 0)
-			break;
-		tempU = u;
-		tempV = v;
-		u = oldU - (q * tempU);
-		v = oldV - (q * tempV);
-		oldU = tempU;
-		oldV = tempV;
-	} while (r > 0);
-	if (u < 0)
-		u += b;
-	if (ret == 'u')
-		return u;
-	if (ret == 'r')
-		return c;
-	if (ret == 'v')
-		return v;
-	return 0;
-}
 unsigned char encrAffineByte(int a, int b, int m, unsigned char x) {
 	int E = (a * x + b) % m;
 	return (unsigned char)E;
@@ -65,25 +16,25 @@ bool isPrimeAM(int a, int m) {
 
 string encrAffineText(const string& text, int a, int b, int m) {
 
-	string encrTextPleyfair;
+	string encrText;
 
 	for (unsigned char item : text) {
-		encrTextPleyfair.push_back(encrAffineByte(a, b, m, item));
+		encrText.push_back(encrAffineByte(a, b, m, item));
 	}
 
-	return encrTextPleyfair;
+	return encrText;
 }
 
 string decrAffineText(const string& text, int a, int b, int m) {
 
-	string decrTextPleyfair;
+	string decrText;
 	int d = ObrEvk(a, m, 'u');
 
 	for (unsigned char item : text) {
-		decrTextPleyfair.push_back(decrAffineByte(d, b, m, item));
+		decrText.push_back(decrAffineByte(d, b, m, item));
 	}
 
-	return decrTextPleyfair;
+	return decrText;
 }
 
 bool encrAffineFile(const string& input, const string& output, int a, int b, int m) {

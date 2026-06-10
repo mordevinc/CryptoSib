@@ -10,6 +10,13 @@
 #include <utility>
 using namespace std;
 
+#pragma comment(lib, "mathFunction.lib")
+
+extern "C" {
+    int evk(int base, int mod);
+    int sqrtZ(int m);
+}
+
 KEYGEN_API pair<int, int> genAfinKey(int m);
 KEYGEN_API string genPleyfairKey(int m);
 KEYGEN_API string genPleyfairKeyRead(int m);

@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 #ifdef PLEYFAIR_EXPORTS
 #define PLEYFAIR_API __declspec(dllexport)
@@ -12,6 +11,11 @@
 #include <utility>
 using namespace std;
 
+#pragma comment(lib, "mathFunction.lib")
+
+extern "C" {
+    int sqrtZ(int m);
+}
 // Основные функции шифрования Плейфера
 PLEYFAIR_API unsigned char** genMatrixPleyfair(string key, int mod);
 PLEYFAIR_API void deleteMatrix(unsigned char** matrix, int mod);

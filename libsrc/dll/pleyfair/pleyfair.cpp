@@ -6,36 +6,6 @@
 #include <unordered_set>
 #include <stdexcept>
 
-using namespace std;
-
-int evk(int base, int mod) {
-    int a = base;
-    int b = mod;
-    int oldB = 0;
-    while (b > 0)
-    {
-        oldB = b;
-        b = a % b;
-        a = oldB;
-    }
-    return a;
-}
-
-int sqrtZ(int m) {
-    if (m < 0)
-        return -1;
-    if (m == 0 || m == 1)
-        return m;
-
-    for (int i = 1; i <= m / i; ++i)
-    {
-        if (i * i == m)
-        {
-            return i;
-        }
-    }
-    return -1;
-}
 
 
 unsigned char** genMatrixPleyfair(string key, int mod) {

@@ -8,6 +8,9 @@
 #define NOGDI                
 #include <windows.h>
 #pragma comment(lib, "src/dll/mathFunction.lib")
+#pragma comment(lib, "src/dll/affine.lib")
+#pragma comment(lib, "src/dll/pleyfair.lib")
+#pragma comment(lib, "src/dll/keygen.lib")
 #endif
 
 const unsigned int MODULE = 256;
@@ -23,7 +26,13 @@ enum class FunctionsOfProgram {
 };
 enum class Algorithms {
 	AFFINE = 1,
-	PLAYFAIR
+	PLAYFAIR,
+	PERMUT,
+	RC4,
+	ASCII,
+	IDEA,
+	RSA,
+	CESAR
 };
 enum class FunctionsOfText {
 	ENCRYPT_TEXT = 1,
@@ -37,7 +46,6 @@ enum class FunctionsOfFile {
 // Установка кодировки консоли
 void setConsoleEncoding();
 
-int getChoice(int min, int max, const string& prompt);
 
 class Windows {
 
@@ -45,6 +53,7 @@ public:
 	void showMenu();
 	
 private:
+	int getChoice(int min, int max, const string& prompt);
 	void choiceFuncOfTextAffine();
 	void choiceFuncOfTextPleyfair();
 	void choiceFuncOfFileAffine();
@@ -54,5 +63,24 @@ private:
 	void choiceFuncOfFile();
 
 	void choiceKeyGen();
+
+	int showTextOperations();
+	int showFileOperations();
+	string checkText();
+	string existFile(const string& operation);
+	string accessCreateDirForSaveFile(const string& operation, const string& dir);
+
+	uint64_t checkKeyAffine();
+	void enterTextToEncryptAffine(uint64_t a, uint64_t b, int mod);
+	void enterTextToDecryptAffine(uint64_t a, uint64_t b, int mod);
+	void enterFileToEncryptAffine(uint64_t a, uint64_t b, int mod);
+	void enterFileToDecryptAffine(uint64_t a, uint64_t b, int mod);
+
+	string checkKeyPleyfair();
+	unsigned char checkMarkerPleyfair();
+	void enterTextToEncryptPleyfair(const string& key, unsigned char marker, int mod);
+	void enterTextToDecryptPleyfair(const string& key, unsigned char marker, int mod);
+	void enterFileToEncryptPleyfair(const string& key, unsigned char marker, int mod);
+	void enterFileToDecryptPleyfair(const string& key, unsigned char marker, int mod);
 };
 #endif
