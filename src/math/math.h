@@ -1,0 +1,7 @@
+#pragma once
+
+extern "C" {
+	int sqrtZ(int m);
+	int evk(int base, int mod);
+	int extendEvk(int a, int b, char ret);
+}
