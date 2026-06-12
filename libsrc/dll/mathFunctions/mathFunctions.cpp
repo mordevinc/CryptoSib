@@ -54,3 +54,45 @@ int sqrtZ(int m) {
 	}
 	return -1;
 }
+
+uint64_t evk64(uint64_t base, uint64_t mod) {
+	while (mod != 0) {
+		uint64_t temp = mod;
+		mod = base % mod;
+		base = temp;
+	}
+	return base;
+}
+
+uint64_t modPow(uint64_t base, uint64_t exp, uint64_t mod) {
+	uint64_t result = 1;
+	base %= mod;
+	while (exp > 0) {
+		if (exp & 1) result = (result * base) % mod;
+		base = (base * base) % mod;
+		exp >>= 1;
+	}
+	return result;
+}
+
+bool isPrime(uint64_t n) {
+	if (n < 2) return false;
+	if (n == 2 || n == 3) return true;
+	if (n % 2 == 0) return false;
+	for (uint64_t i = 3; i * i <= n; i += 2) {
+		if (n % i == 0) return false;
+	}
+	return true;
+}
+
+uint64_t generatePrime(int bits) {
+	random_device rd;
+	mt19937_64 gen(rd());
+	uniform_int_distribution<uint64_t> dist(1ULL << (bits - 1), (1ULL << bits) - 1);
+	uint64_t candidate;
+	do {
+		candidate = dist(gen);
+		if (candidate % 2 == 0) candidate++;
+	} while (!isPrime(candidate));
+	return candidate;
+}
