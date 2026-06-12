@@ -1,6 +1,5 @@
 #include "crossCrypto.h"
 
-
 string strToHex(const string& str) {
 	stringstream ss;
 	ss << hex << setfill('0');

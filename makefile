@@ -2,7 +2,7 @@
 COMPILER = g++
 CXXFLAGS = -I./src -I./crossPlatform -I./src/menu -I./crossPlatform/menu
 LDFLAGS = -L./crossPlatform/so
-LDLIBS = -l:affine.so -l:keygen.so -l:pleyfair.so -l:mathFunctions.so
+LDLIBS = -l:affine.so -l:caesar.so -l:rsa.so -l:ascii.so -l:idea.so -l:rc4.so -l:permut.so -l:pleyfair.so -l:keygen.so -l:mathFunctions.so
 RPATH = -Wl,-rpath,'$$ORIGIN/crossPlatform/so'
 
 # Целевой исполняемый файл 
@@ -11,7 +11,8 @@ TARGET = CryptoSib
 # Исходные файлы 
 SOURCES = main.cpp \
          $(shell find src/menu -name '*.cpp') \
-          $(shell find crossPlatform/menu -name '*.cpp')
+         $(shell find crossPlatform/menu -name '*.cpp')\
+         $(shell find crossPlatform/crypto -name '*.cpp')
 
 # Правило по умолчанию
 all: $(TARGET)
