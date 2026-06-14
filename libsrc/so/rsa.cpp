@@ -2,69 +2,92 @@
 #include <iostream>
 #include <filesystem>
 #include <string>
+#include <vector>
+#include <sstream>
 #include <cstdint>
 using namespace std;
 namespace fs = std::filesystem;
 
 extern "C" {
-    int evk(int base, int mod);
+    uint64_t modPow(uint64_t base, uint64_t exp, uint64_t mod);
+    uint64_t evk64(uint64_t base, uint64_t mod);
     int extendEvk(int a, int b, char ret);
+    bool isPrime(uint64_t n);  // ← добавить
 }
 
-unsigned char encrAffineByte(int a, int b, int m, unsigned char x) {
-    return (unsigned char)((a * x + b) % m);
+vector<uint64_t> encrRsaBlock(const string& text, uint64_t e, uint64_t n) {
+    vector<uint64_t> blocks;
+    for (unsigned char c : text) blocks.push_back(modPow(c, e, n));
+    return blocks;
 }
 
-unsigned char decrAffineByte(int d, int b, int m, unsigned char y) {
-    return (unsigned char)((d * ((y - b + m) % m)) % m);
-}
-
-bool isPrimeAM(int a, int m) {
-    return evk(a, m) == 1;
-}
-
-string encrAffineText(const string& text, int a, int b, int m) {
+string decrRsaBlock(const vector<uint64_t>& blocks, uint64_t d, uint64_t n) {
     string result;
-    for (unsigned char c : text) result.push_back(encrAffineByte(a, b, m, c));
+    for (uint64_t block : blocks) result.push_back((char)modPow(block, d, n));
     return result;
 }
 
-string decrAffineText(const string& text, int a, int b, int m) {
+string encrRsaText(const string& text, uint64_t e, uint64_t n) {
+    vector<uint64_t> blocks = encrRsaBlock(text, e, n);
     string result;
-    int d = extendEvk(a, m, 'u');
-    for (unsigned char c : text) result.push_back(decrAffineByte(d, b, m, c));
+    for (uint64_t block : blocks) result += to_string(block) + " ";
     return result;
 }
 
-bool encrAffineFile(const string& input, const string& output, int a, int b, int m) {
+string decrRsaText(const string& cipher, uint64_t d, uint64_t n) {
+    vector<uint64_t> blocks;
+    stringstream ss(cipher);
+    uint64_t block;
+    while (ss >> block) blocks.push_back(block);
+    return decrRsaBlock(blocks, d, n);
+}
+
+bool encrRsaFile(const string& input, const string& output, uint64_t e, uint64_t n) {
     try {
         fs::path outPath(output);
         if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
             fs::create_directories(outPath.parent_path());
         ifstream in(input, ios::binary);
         if (!in.is_open()) return false;
+        string data((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+        in.close();
+        string encrypted = encrRsaText(data, e, n);
         ofstream out(output, ios::binary);
         if (!out.is_open()) return false;
-        char byte;
-        while (in.get(byte)) out.put(encrAffineByte(a, b, m, (unsigned char)byte));
+        out.write(encrypted.c_str(), encrypted.size());
         return true;
     } catch (...) { return false; }
 }
 
-bool decrAffineFile(const string& input, const string& output, int a, int b, int m) {
+bool decrRsaFile(const string& input, const string& output, uint64_t d, uint64_t n) {
     try {
         fs::path outPath(output);
         if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
             fs::create_directories(outPath.parent_path());
         ifstream in(input, ios::binary);
         if (!in.is_open()) return false;
+        string data((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+        in.close();
+        string decrypted = decrRsaText(data, d, n);
         ofstream out(output, ios::binary);
         if (!out.is_open()) return false;
-        int d = extendEvk(a, m, 'u');
-        char byte;
-        while (in.get(byte)) out.put(decrAffineByte(d, b, m, (unsigned char)byte));
+        out.write(decrypted.c_str(), decrypted.size());
         return true;
     } catch (...) { return false; }
+}
+
+pair<uint64_t, uint64_t> genRsaKeys(uint64_t p, uint64_t q) {
+    if (!isPrime(p) || !isPrime(q) || p == q) return {0, 0};
+    uint64_t n = p * q;
+    uint64_t phi = (p - 1) * (q - 1);
+    uint64_t e = 65537;
+    if (evk64(e, phi) != 1) {
+        for (e = 3; e < phi; e += 2) {
+            if (evk64(e, phi) == 1) break;
+        }
+    }
+    uint64_t d = extendEvk(e, phi, 'u');
+    return {e, d};
 }
 
 #include <cstdint>

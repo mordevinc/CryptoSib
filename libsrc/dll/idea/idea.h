@@ -26,6 +26,7 @@ struct IDEAKey {
 };
 
 IDEA_API IDEAKey generateIDEAKey(const string& password);
+IDEA_API IDEAKey generateInverseKey(const IDEAKey& key);
 IDEA_API unsigned char ideaEncryptByte(unsigned char plain, const IDEAKey& key);
 IDEA_API unsigned char ideaDecryptByte(unsigned char cipher, const IDEAKey& key);
 IDEA_API string ideaEncryptText(const string& text, const string& password);

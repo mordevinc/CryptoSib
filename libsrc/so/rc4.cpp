@@ -2,69 +2,55 @@
 #include <iostream>
 #include <filesystem>
 #include <string>
-#include <cstdint>
+#include <vector>
 using namespace std;
 namespace fs = std::filesystem;
 
-extern "C" {
-    int evk(int base, int mod);
-    int extendEvk(int a, int b, char ret);
+void rc4Init(const string& key, vector<unsigned char>& S) {
+    S.resize(256);
+    for (int i = 0; i < 256; i++) S[i] = i;
+    int j = 0;
+    for (int i = 0; i < 256; i++) {
+        j = (j + S[i] + key[i % key.size()]) % 256;
+        swap(S[i], S[j]);
+    }
 }
 
-unsigned char encrAffineByte(int a, int b, int m, unsigned char x) {
-    return (unsigned char)((a * x + b) % m);
+unsigned char rc4Byte(vector<unsigned char>& S, int& i, int& j) {
+    i = (i + 1) % 256;
+    j = (j + S[i]) % 256;
+    swap(S[i], S[j]);
+    return S[(S[i] + S[j]) % 256];
 }
 
-unsigned char decrAffineByte(int d, int b, int m, unsigned char y) {
-    return (unsigned char)((d * ((y - b + m) % m)) % m);
-}
-
-bool isPrimeAM(int a, int m) {
-    return evk(a, m) == 1;
-}
-
-string encrAffineText(const string& text, int a, int b, int m) {
+string rc4Crypt(const string& data, const string& key) {
+    vector<unsigned char> S;
+    rc4Init(key, S);
+    int i = 0, j = 0;
     string result;
-    for (unsigned char c : text) result.push_back(encrAffineByte(a, b, m, c));
+    for (char c : data) result.push_back(c ^ rc4Byte(S, i, j));
     return result;
 }
 
-string decrAffineText(const string& text, int a, int b, int m) {
-    string result;
-    int d = extendEvk(a, m, 'u');
-    for (unsigned char c : text) result.push_back(decrAffineByte(d, b, m, c));
-    return result;
-}
-
-bool encrAffineFile(const string& input, const string& output, int a, int b, int m) {
+bool rc4EncryptFile(const string& input, const string& output, const string& key) {
     try {
         fs::path outPath(output);
         if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
             fs::create_directories(outPath.parent_path());
         ifstream in(input, ios::binary);
         if (!in.is_open()) return false;
+        string data((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+        in.close();
+        string encrypted = rc4Crypt(data, key);
         ofstream out(output, ios::binary);
         if (!out.is_open()) return false;
-        char byte;
-        while (in.get(byte)) out.put(encrAffineByte(a, b, m, (unsigned char)byte));
+        out.write(encrypted.c_str(), encrypted.size());
         return true;
     } catch (...) { return false; }
 }
 
-bool decrAffineFile(const string& input, const string& output, int a, int b, int m) {
-    try {
-        fs::path outPath(output);
-        if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
-            fs::create_directories(outPath.parent_path());
-        ifstream in(input, ios::binary);
-        if (!in.is_open()) return false;
-        ofstream out(output, ios::binary);
-        if (!out.is_open()) return false;
-        int d = extendEvk(a, m, 'u');
-        char byte;
-        while (in.get(byte)) out.put(decrAffineByte(d, b, m, (unsigned char)byte));
-        return true;
-    } catch (...) { return false; }
+bool rc4DecryptFile(const string& input, const string& output, const string& key) {
+    return rc4EncryptFile(input, output, key);
 }
 
 #include <cstdint>

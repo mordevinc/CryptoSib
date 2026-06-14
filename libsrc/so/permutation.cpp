@@ -2,67 +2,71 @@
 #include <iostream>
 #include <filesystem>
 #include <string>
-#include <cstdint>
+#include <vector>
 using namespace std;
 namespace fs = std::filesystem;
 
-extern "C" {
-    int evk(int base, int mod);
-    int extendEvk(int a, int b, char ret);
-}
-
-unsigned char encrAffineByte(int a, int b, int m, unsigned char x) {
-    return (unsigned char)((a * x + b) % m);
-}
-
-unsigned char decrAffineByte(int d, int b, int m, unsigned char y) {
-    return (unsigned char)((d * ((y - b + m) % m)) % m);
-}
-
-bool isPrimeAM(int a, int m) {
-    return evk(a, m) == 1;
-}
-
-string encrAffineText(const string& text, int a, int b, int m) {
+string encrPermutationText(const string& text, const vector<int>& key) {
+    int cols = key.size();
+    int rows = (text.size() + cols - 1) / cols;
+    vector<vector<char>> matrix(rows, vector<char>(cols, ' '));
+    int idx = 0;
+    for (int row = 0; row < rows; row++)
+        for (int col = 0; col < cols; col++)
+            if (idx < text.size()) matrix[row][col] = text[idx++];
     string result;
-    for (unsigned char c : text) result.push_back(encrAffineByte(a, b, m, c));
+    for (int k : key)
+        for (int row = 0; row < rows; row++)
+            if (matrix[row][k] != ' ') result.push_back(matrix[row][k]);
     return result;
 }
 
-string decrAffineText(const string& text, int a, int b, int m) {
+string decrPermutationText(const string& text, const vector<int>& key) {
+    int cols = key.size();
+    int rows = (text.size() + cols - 1) / cols;
+    vector<vector<char>> matrix(rows, vector<char>(cols, ' '));
+    int idx = 0;
+    for (int k : key)
+        for (int row = 0; row < rows; row++)
+            if (idx < text.size()) matrix[row][k] = text[idx++];
     string result;
-    int d = extendEvk(a, m, 'u');
-    for (unsigned char c : text) result.push_back(decrAffineByte(d, b, m, c));
+    for (int row = 0; row < rows; row++)
+        for (int col = 0; col < cols; col++)
+            if (matrix[row][col] != ' ') result.push_back(matrix[row][col]);
+    while (!result.empty() && result.back() == ' ') result.pop_back();
     return result;
 }
 
-bool encrAffineFile(const string& input, const string& output, int a, int b, int m) {
+bool encrPermutationFile(const string& input, const string& output, const vector<int>& key) {
     try {
         fs::path outPath(output);
         if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
             fs::create_directories(outPath.parent_path());
         ifstream in(input, ios::binary);
         if (!in.is_open()) return false;
+        string data((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+        in.close();
+        string encrypted = encrPermutationText(data, key);
         ofstream out(output, ios::binary);
         if (!out.is_open()) return false;
-        char byte;
-        while (in.get(byte)) out.put(encrAffineByte(a, b, m, (unsigned char)byte));
+        out.write(encrypted.c_str(), encrypted.size());
         return true;
     } catch (...) { return false; }
 }
 
-bool decrAffineFile(const string& input, const string& output, int a, int b, int m) {
+bool decrPermutationFile(const string& input, const string& output, const vector<int>& key) {
     try {
         fs::path outPath(output);
         if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
             fs::create_directories(outPath.parent_path());
         ifstream in(input, ios::binary);
         if (!in.is_open()) return false;
+        string data((istreambuf_iterator<char>(in)), istreambuf_iterator<char>());
+        in.close();
+        string decrypted = decrPermutationText(data, key);
         ofstream out(output, ios::binary);
         if (!out.is_open()) return false;
-        int d = extendEvk(a, m, 'u');
-        char byte;
-        while (in.get(byte)) out.put(decrAffineByte(d, b, m, (unsigned char)byte));
+        out.write(decrypted.c_str(), decrypted.size());
         return true;
     } catch (...) { return false; }
 }

@@ -2,41 +2,30 @@
 #include <iostream>
 #include <filesystem>
 #include <string>
-#include <cstdint>
 using namespace std;
 namespace fs = std::filesystem;
 
-extern "C" {
-    int evk(int base, int mod);
-    int extendEvk(int a, int b, char ret);
+unsigned char encrAsciiByte(int shift, unsigned char x) {
+    return (unsigned char)((x + shift) % 256);
 }
 
-unsigned char encrAffineByte(int a, int b, int m, unsigned char x) {
-    return (unsigned char)((a * x + b) % m);
+unsigned char decrAsciiByte(int shift, unsigned char y) {
+    return (unsigned char)((y - shift + 256) % 256);
 }
 
-unsigned char decrAffineByte(int d, int b, int m, unsigned char y) {
-    return (unsigned char)((d * ((y - b + m) % m)) % m);
-}
-
-bool isPrimeAM(int a, int m) {
-    return evk(a, m) == 1;
-}
-
-string encrAffineText(const string& text, int a, int b, int m) {
+string encrAsciiText(const string& text, int shift) {
     string result;
-    for (unsigned char c : text) result.push_back(encrAffineByte(a, b, m, c));
+    for (unsigned char c : text) result.push_back(encrAsciiByte(shift, c));
     return result;
 }
 
-string decrAffineText(const string& text, int a, int b, int m) {
+string decrAsciiText(const string& text, int shift) {
     string result;
-    int d = extendEvk(a, m, 'u');
-    for (unsigned char c : text) result.push_back(decrAffineByte(d, b, m, c));
+    for (unsigned char c : text) result.push_back(decrAsciiByte(shift, c));
     return result;
 }
 
-bool encrAffineFile(const string& input, const string& output, int a, int b, int m) {
+bool encrAsciiFile(const string& input, const string& output, int shift) {
     try {
         fs::path outPath(output);
         if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
@@ -46,12 +35,12 @@ bool encrAffineFile(const string& input, const string& output, int a, int b, int
         ofstream out(output, ios::binary);
         if (!out.is_open()) return false;
         char byte;
-        while (in.get(byte)) out.put(encrAffineByte(a, b, m, (unsigned char)byte));
+        while (in.get(byte)) out.put(encrAsciiByte(shift, (unsigned char)byte));
         return true;
     } catch (...) { return false; }
 }
 
-bool decrAffineFile(const string& input, const string& output, int a, int b, int m) {
+bool decrAsciiFile(const string& input, const string& output, int shift) {
     try {
         fs::path outPath(output);
         if (!outPath.parent_path().empty() && !fs::exists(outPath.parent_path()))
@@ -60,9 +49,8 @@ bool decrAffineFile(const string& input, const string& output, int a, int b, int
         if (!in.is_open()) return false;
         ofstream out(output, ios::binary);
         if (!out.is_open()) return false;
-        int d = extendEvk(a, m, 'u');
         char byte;
-        while (in.get(byte)) out.put(decrAffineByte(d, b, m, (unsigned char)byte));
+        while (in.get(byte)) out.put(decrAsciiByte(shift, (unsigned char)byte));
         return true;
     } catch (...) { return false; }
 }

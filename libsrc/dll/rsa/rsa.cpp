@@ -1,4 +1,5 @@
 #include "rsa.h"
+#include <stdexcept>
 
 vector<uint64_t> encrRsaBlock(const string& text, uint64_t e, uint64_t n) {
     vector<uint64_t> blocks;
@@ -78,14 +79,27 @@ bool decrRsaFile(const string& input, const string& output, uint64_t d, uint64_t
 }
 
 pair<uint64_t, uint64_t> genRsaKeys(uint64_t p, uint64_t q) {
+    // Проверка, что p и q — простые числа
+    if (!isPrime(p)) {
+        throw runtime_error("p не является простым числом: " + to_string(p));
+    }
+    if (!isPrime(q)) {
+        throw runtime_error("q не является простым числом: " + to_string(q));
+    }
+    if (p == q) {
+        throw runtime_error("p и q должны быть разными простыми числами");
+    }
+
     uint64_t n = p * q;
     uint64_t phi = (p - 1) * (q - 1);
     uint64_t e = 65537;
+
     if (evk64(e, phi) != 1) {
         for (e = 3; e < phi; e += 2) {
             if (evk64(e, phi) == 1) break;
         }
     }
-    uint64_t d = extendEvk(e, phi, 'u');
+
+    uint64_t d = extendEvk(static_cast<int>(e), static_cast<int>(phi), 'u');
     return { e, d };
 }

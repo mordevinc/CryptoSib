@@ -22,6 +22,7 @@ extern "C" {
     uint64_t modPow(uint64_t base, uint64_t exp, uint64_t mod);
     uint64_t evk64(uint64_t base, uint64_t mod);
     int extendEvk(int a, int b, char ret);
+    bool isPrime(uint64_t n);
 }
 
 RSA_API vector<uint64_t> encrRsaBlock(const string& text, uint64_t e, uint64_t n);

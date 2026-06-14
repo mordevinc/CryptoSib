@@ -5,10 +5,17 @@ string encrPermutationText(const string& text, const vector<int>& key) {
     int rows = (text.size() + cols - 1) / cols;
     vector<vector<char>> matrix(rows, vector<char>(cols, ' '));
 
-    for (int i = 0; i < text.size(); i++) {
-        matrix[i / cols][i % cols] = text[i];
+    // Заполняем матрицу по строкам
+    int idx = 0;
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < cols; col++) {
+            if (idx < text.size()) {
+                matrix[row][col] = text[idx++];
+            }
+        }
     }
 
+    // Читаем по столбцам в порядке ключа
     string result;
     for (int k : key) {
         for (int row = 0; row < rows; row++) {
@@ -25,26 +32,31 @@ string decrPermutationText(const string& text, const vector<int>& key) {
     int rows = (text.size() + cols - 1) / cols;
     vector<vector<char>> matrix(rows, vector<char>(cols, ' '));
 
-    vector<int> invKey(cols);
-    for (int i = 0; i < cols; i++) {
-        invKey[key[i]] = i;
-    }
-
+    // Заполняем матрицу по столбцам в порядке ключа
     int idx = 0;
     for (int k : key) {
         for (int row = 0; row < rows; row++) {
-            if (idx < text.size() && row * cols + k < rows * cols) {
+            if (idx < text.size()) {
                 matrix[row][k] = text[idx++];
             }
         }
     }
 
+    // Читаем по строкам
     string result;
-    for (int i = 0; i < rows * cols && i < text.size(); i++) {
-        if (matrix[i / cols][i % cols] != ' ') {
-            result.push_back(matrix[i / cols][i % cols]);
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < cols; col++) {
+            if (matrix[row][col] != ' ') {
+                result.push_back(matrix[row][col]);
+            }
         }
     }
+
+    // Удаляем лишние пробелы в конце
+    while (!result.empty() && result.back() == ' ') {
+        result.pop_back();
+    }
+
     return result;
 }
 
