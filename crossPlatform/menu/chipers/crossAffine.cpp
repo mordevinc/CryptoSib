@@ -40,7 +40,7 @@ void CrossPlatform::enterTextToDecryptAffine(uint64_t a, uint64_t b, int mod) {
 }
 
 void CrossPlatform::enterFileToEncryptAffine(uint64_t a, uint64_t b, int mod) {
-    string pathFileToEncr = existFile("зашифровать");
+    string pathFileToEncr = existFile("зашифровать", INPUT_DIR);
     string pathFileEncr = accessCreateDirForSaveFile("зашифрованному", ENCR_DIR);
 
     if (encrAffineFile(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, a, b, mod)) {
@@ -53,7 +53,7 @@ void CrossPlatform::enterFileToEncryptAffine(uint64_t a, uint64_t b, int mod) {
 }
 
 void CrossPlatform::enterFileToDecryptAffine(uint64_t a, uint64_t b, int mod) {
-    string pathFileToDecr = existFile("расшифровать");
+    string pathFileToDecr = existFile("расшифровать", ENCR_DIR);
     string pathFileDecr = accessCreateDirForSaveFile("расшифрованному", DECR_DIR);
 
     if (decrAffineFile(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, a, b, mod)) {
