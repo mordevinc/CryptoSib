@@ -35,12 +35,12 @@ string Windows::checkText() {
 	}
 }
 
-string Windows::existFile(const string& operation, const string& dir) {
+string Windows::existFile(const string& operation) {
 	string pathFile;
 	while (true) {
 		cout << "¬ведите путь до файла, который хотите " << operation << "." << endl;
 		getline(cin, pathFile);
-		ifstream file(dir + pathFile);
+		ifstream file(INPUT_DIR + pathFile);
 		if (file.good()) {
 			file.close();
 			return pathFile;

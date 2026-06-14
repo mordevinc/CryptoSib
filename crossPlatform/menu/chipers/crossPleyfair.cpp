@@ -83,7 +83,7 @@ void CrossPlatform::enterTextToDecryptPleyfair(const string& key, unsigned char 
 }
 
 void CrossPlatform::enterFileToEncryptPleyfair(const string& key, unsigned char marker, int mod) {
-    string pathFileToEncr = existFile("зашифровать", INPUT_DIR);
+    string pathFileToEncr = existFile("зашифровать");
     string pathFileEncr = accessCreateDirForSaveFile("зашифрованному", ENCR_DIR);
 
     if (encrFilePleyfair(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, key, marker, mod)) {
@@ -96,7 +96,7 @@ void CrossPlatform::enterFileToEncryptPleyfair(const string& key, unsigned char 
 }
 
 void CrossPlatform::enterFileToDecryptPleyfair(const string& key, unsigned char marker, int mod) {
-    string pathFileToDecr = existFile("расшифровать", ENCR_DIR);
+    string pathFileToDecr = existFile("расшифровать");
     string pathFileDecr = accessCreateDirForSaveFile("расшифрованному", DECR_DIR);
 
     if (decrFilePleyfair(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, key, marker, mod)) {

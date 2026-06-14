@@ -50,25 +50,18 @@ void CrossPlatform::choiceFuncOfText() {
     cout << "\nВыберите алгоритм для шифрования/дешифрования текста:" << endl;
     cout << "1) Афинный шифр" << endl;
     cout << "2) Шифр Плейфера" << endl;
-    cout << "3) Шифр Цезаря" << endl;
-    cout << "4) RSA" << endl;
-    cout << "5) Сдвиг по ASCII" << endl;
-    cout << "6) IDEA" << endl;
-    cout << "7) RC4" << endl;
-    cout << "8) Столбцовая перестановка" << endl;
 
-    int choice = getChoice(1, 8, "Введите Ваш выбор (1-8): ");
+    int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
 
     switch (Algorithms(choice)) {
-    case Algorithms::AFFINE:      choiceFuncOfTextAffine(); break;
-    case Algorithms::PLAYFAIR:    choiceFuncOfTextPleyfair(); break;
-    case Algorithms::CAESAR:      choiceFuncOfTextCaesar(); break;
-    case Algorithms::RSA:         choiceFuncOfTextRsa(); break;
-    case Algorithms::ASCII:       choiceFuncOfTextAscii(); break;
-    case Algorithms::IDEA:        choiceFuncOfTextIdea(); break;
-    case Algorithms::RC4:         choiceFuncOfTextRc4(); break;
-    case Algorithms::PERMUTATION: choiceFuncOfTextPermutation(); break;
-    default: cout << "ОШИБКА\n";
+    case Algorithms::AFFINE:
+        choiceFuncOfTextAffine();
+        break;
+    case Algorithms::PLAYFAIR:
+        choiceFuncOfTextPleyfair();
+        break;
+    default:
+        cout << "ERROR\n";
     }
 }
 
@@ -76,24 +69,17 @@ void CrossPlatform::choiceFuncOfFile() {
     cout << "\nВыберите алгоритм для шифрования/дешифрования файла:" << endl;
     cout << "1) Афинный шифр" << endl;
     cout << "2) Шифр Плейфера" << endl;
-    cout << "3) Шифр Цезаря" << endl;
-    cout << "4) RSA" << endl;
-    cout << "5) Сдвиг по ASCII" << endl;
-    cout << "6) IDEA" << endl;
-    cout << "7) RC4" << endl;
-    cout << "8) Столбцовая перестановка" << endl;
 
-    int choice = getChoice(1, 8, "Введите Ваш выбор (1-8): ");
+    int choice = getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
 
     switch (Algorithms(choice)) {
-    case Algorithms::AFFINE:      choiceFuncOfFileAffine(); break;
-    case Algorithms::PLAYFAIR:    choiceFuncOfFilePleyfair(); break;
-    case Algorithms::CAESAR:      choiceFuncOfFileCaesar(); break;
-    case Algorithms::RSA:         choiceFuncOfFileRsa(); break;
-    case Algorithms::ASCII:       choiceFuncOfFileAscii(); break;
-    case Algorithms::IDEA:        choiceFuncOfFileIdea(); break;
-    case Algorithms::RC4:         choiceFuncOfFileRc4(); break;
-    case Algorithms::PERMUTATION: choiceFuncOfFilePermutation(); break;
-    default: cout << "ОШИБКА\n";
+    case Algorithms::AFFINE:
+        choiceFuncOfFileAffine();
+        break;
+    case Algorithms::PLAYFAIR:
+        choiceFuncOfFilePleyfair();
+        break;
+    default:
+        cout << "ОШИБКА\n";
     }
 }

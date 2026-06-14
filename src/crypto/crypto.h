@@ -48,65 +48,9 @@ void hexToFile(const string& hex, const string& filename);
 bool encrFilePleyfair(const string& input, const string& output, string key, unsigned char marker, int mod);
 bool decrFilePleyfair(const string& input, const string& output, string key, unsigned char marker, int mod);
 
-// ШИФР ЦЕЗАРЯ
-unsigned char encrCaesarByte(int shift, int m, unsigned char x);
-unsigned char decrCaesarByte(int shift, int m, unsigned char y);
-string encrCaesarText(const string& text, int shift, int m);
-string decrCaesarText(const string& text, int shift, int m);
-bool encrCaesarFile(const string& input, const string& output, int shift, int m);
-bool decrCaesarFile(const string& input, const string& output, int shift, int m);
-
-// RSA 
-uint64_t modPow(uint64_t base, uint64_t exp, uint64_t mod);
-vector<uint64_t> encrRsaBlock(const string& text, uint64_t e, uint64_t n);
-string decrRsaBlock(const vector<uint64_t>& blocks, uint64_t d, uint64_t n);
-string encrRsaText(const string& text, uint64_t e, uint64_t n);
-string decrRsaText(const string& cipher, uint64_t d, uint64_t n);
-bool encrRsaFile(const string& input, const string& output, uint64_t e, uint64_t n);
-bool decrRsaFile(const string& input, const string& output, uint64_t d, uint64_t n);
-pair<uint64_t, uint64_t> genRsaKeys(uint64_t p, uint64_t q);
-
-// СДВИГ ПО ASCII
-unsigned char encrAsciiByte(int shift, unsigned char x);
-unsigned char decrAsciiByte(int shift, unsigned char y);
-string encrAsciiText(const string& text, int shift);
-string decrAsciiText(const string& text, int shift);
-bool encrAsciiFile(const string& input, const string& output, int shift);
-bool decrAsciiFile(const string& input, const string& output, int shift);
-
-// IDEA
-struct IDEAKey {
-    uint16_t k[52];
-};
-IDEAKey generateIDEAKey(const string& password);
-unsigned char ideaEncryptByte(unsigned char plain, const IDEAKey& key);
-unsigned char ideaDecryptByte(unsigned char cipher, const IDEAKey& key);
-string ideaEncryptText(const string& text, const string& password);
-string ideaDecryptText(const string& cipher, const string& password);
-bool ideaEncryptFile(const string& input, const string& output, const string& password);
-bool ideaDecryptFile(const string& input, const string& output, const string& password);
-
-// RC4
-void rc4Init(const string& key, vector<unsigned char>& S);
-unsigned char rc4Byte(vector<unsigned char>& S, int& i, int& j);
-string rc4Crypt(const string& data, const string& key);
-bool rc4EncryptFile(const string& input, const string& output, const string& key);
-bool rc4DecryptFile(const string& input, const string& output, const string& key);
-
-// СТОЛБЦОВАЯ ПЕРЕСТАНОВКА
-string encrPermutationText(const string& text, const vector<int>& key);
-string decrPermutationText(const string& text, const vector<int>& key);
-bool encrPermutationFile(const string& input, const string& output, const vector<int>& key);
-bool decrPermutationFile(const string& input, const string& output, const vector<int>& key);
-
 //Генератор ключей для шифров
 pair<int, int> genAfinKey(int m);
 string genPleyfairKey(int m);
 string genPleyfairKeyRead(int m);
-int genCaesarKey(int m);
-int genAsciiKey();
-string genIdeaKey(int length);
-string genRc4Key(int length);
-vector<int> genPermutationKey(int cols);
 
 #endif

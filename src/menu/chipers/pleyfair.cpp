@@ -62,7 +62,7 @@ void Windows::enterTextToDecryptPleyfair(const string& key, unsigned char marker
 	cout << decrTxt << endl;
 }
 void Windows::enterFileToEncryptPleyfair(const string& key, unsigned char marker, int mod) {
-	string pathFileToEncr = Windows::existFile("зашифровать", INPUT_DIR);
+	string pathFileToEncr = Windows::existFile("зашифровать");
 	string pathFileEncr = Windows::accessCreateDirForSaveFile("зашифрованному", ENCR_DIR);
 
 	if (encrFilePleyfair(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, key, marker, mod)) {
@@ -74,7 +74,7 @@ void Windows::enterFileToEncryptPleyfair(const string& key, unsigned char marker
 	}
 }
 void Windows::enterFileToDecryptPleyfair(const string& key, unsigned char marker, int mod) {
-	string pathFileToDecr = Windows::existFile("расшифровать", ENCR_DIR);
+	string pathFileToDecr = Windows::existFile("расшифровать");
 	string pathFileDecr = Windows::accessCreateDirForSaveFile("расшифрованному", DECR_DIR);
 
 	if (decrFilePleyfair(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, key, marker, mod)) {

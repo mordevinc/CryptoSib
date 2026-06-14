@@ -32,12 +32,12 @@ string CrossPlatform::checkText() {
     }
 }
 
-string CrossPlatform::existFile(const string& operation, const string& dir) {
+string CrossPlatform::existFile(const string& operation) {
     string pathFile;
     while (true) {
         cout << "Введите путь до файла, который хотите " << operation << "." << endl;
         getline(cin, pathFile);
-        ifstream file(dir + pathFile);
+        ifstream file(INPUT_DIR + pathFile);
         if (file.good()) {
             file.close();
             return pathFile;

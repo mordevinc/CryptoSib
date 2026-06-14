@@ -28,7 +28,7 @@ void Windows::enterTextToDecryptAffine(uint64_t a, uint64_t b, int mod) {
 	cout << decrAffineText(text, a, b, MODULE) << endl;
 }
 void Windows::enterFileToEncryptAffine(uint64_t a, uint64_t b, int mod) {
-	string pathFileToEncr = Windows::existFile("зашифровать", INPUT_DIR);
+	string pathFileToEncr = Windows::existFile("зашифровать");
 	string pathFileEncr = Windows::accessCreateDirForSaveFile("зашифрованному", ENCR_DIR);
 	if (encrAffineFile(INPUT_DIR + pathFileToEncr, ENCR_DIR + pathFileEncr, a, b, MODULE)) {
 		cout << "Файл успешно зашифрован!" << endl;
@@ -39,7 +39,7 @@ void Windows::enterFileToEncryptAffine(uint64_t a, uint64_t b, int mod) {
 	}
 }
 void Windows::enterFileToDecryptAffine(uint64_t a, uint64_t b, int mod) {
-	string pathFileToDecr = Windows::existFile("расшифровать", ENCR_DIR);
+	string pathFileToDecr = Windows::existFile("расшифровать");
 	string pathFileDecr = Windows::accessCreateDirForSaveFile("расшифрованному", DECR_DIR);
 
 	if (decrAffineFile(ENCR_DIR + pathFileToDecr, DECR_DIR + pathFileDecr, a, b, MODULE)) {
