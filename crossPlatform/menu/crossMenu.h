@@ -71,14 +71,14 @@ private:
     void choiceFuncOfTextAscii();
     void choiceFuncOfFileAscii();
 
-    // IDEA
-    string checkKeyIdea();
-    void enterTextToEncryptIdea(const string& password);
-    void enterTextToDecryptIdea(const string& password);
-    void enterFileToEncryptIdea(const string& password);
-    void enterFileToDecryptIdea(const string& password);
-    void choiceFuncOfTextIdea();
-    void choiceFuncOfFileIdea();
+    // XOR
+    string checkKeyXOR();
+    void enterTextToEncryptXOR(const string& password);
+    void enterTextToDecryptXOR(const string& password);
+    void enterFileToEncryptXOR(const string& password);
+    void enterFileToDecryptXOR(const string& password);
+    void choiceFuncOfTextXOR();
+    void choiceFuncOfFileXOR();
 
     // RC4
     string checkKeyRc4();
@@ -101,7 +101,7 @@ private:
 
     void choiceKeyGenCaesar();
     void choiceKeyGenAscii();
-    void choiceKeyGenIdea();
+    void choiceKeyGenXOR();
     void choiceKeyGenRc4();
     void choiceKeyGenPermutation();
 };

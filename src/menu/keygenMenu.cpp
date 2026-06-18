@@ -2,27 +2,27 @@
 
 void Windows::choiceKeyGen() {
     try {
-        cout << "\nВыберите алгоритм для генерации ключа" << endl;
-        cout << "1) Афинный шифр" << endl;
-        cout << "2) Шифр Плейфера" << endl;
-        cout << "3) Шифр Цезаря" << endl;
+        cout << "\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ" << endl;
+        cout << "1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ" << endl;
+        cout << "2) пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+        cout << "3) пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
         cout << "4) RSA" << endl;
-        cout << "5) Сдвиг по ASCII" << endl;
-        cout << "6) IDEA" << endl;
+        cout << "5) пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ASCII" << endl;
+        cout << "6) XOR" << endl;
         cout << "7) RC4" << endl;
-        cout << "8) Столбцовая перестановка" << endl;
-        cout << "Ваш выбор (1-8): ";
+        cout << "8) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+        cout << "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1-8): ";
 
-        int choice = getChoice(1, 8, "Введите Ваш выбор (1-8): ");
+        int choice = getChoice(1, 8, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1-8): ");
 
         switch (Algorithms(choice)) {
         case Algorithms::AFFINE: {
             pair<int, int> keys = genAfinKey(MODULE);
-            cout << "Ключ 'a' = " << keys.first << ", ключ 'b' = " << keys.second << endl;
+            cout << "пїЅпїЅпїЅпїЅ 'a' = " << keys.first << ", пїЅпїЅпїЅпїЅ 'b' = " << keys.second << endl;
             break;
         }
         case Algorithms::PLAYFAIR: {
-            cout << "Ключ: " << genPleyfairKeyRead(MODULE) << endl;
+            cout << "пїЅпїЅпїЅпїЅ: " << genPleyfairKeyRead(MODULE) << endl;
             break;
         }
         case Algorithms::RSA: {
@@ -37,8 +37,8 @@ void Windows::choiceKeyGen() {
             choiceKeyGenAscii();
             break;
         }
-        case Algorithms::IDEA: {
-            choiceKeyGenIdea();
+        case Algorithms::XOR: {
+            choiceKeyGenXOR();
             break;
         }
         case Algorithms::RC4: {
@@ -50,41 +50,41 @@ void Windows::choiceKeyGen() {
             break;
         }
         default:
-            cout << "ОШИБКА\n";
+            cout << "пїЅпїЅпїЅпїЅпїЅпїЅ\n";
         }
     }
     catch (const exception& e) {
-        cerr << "Ошибка генерации ключа: " << e.what() << endl;
+        cerr << "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " << e.what() << endl;
     }
 }
 
 void Windows::choiceKeyGenCaesar() {
     int shift = genCaesarKey(MODULE);
-    cout << "Случайный сдвиг: " << shift << endl;
+    cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " << shift << endl;
 }
 
 void Windows::choiceKeyGenAscii() {
     int shift = genAsciiKey();
-    cout << "Случайный сдвиг: " << shift << endl;
+    cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: " << shift << endl;
 }
 
-void Windows::choiceKeyGenIdea() {
-    string key = genIdeaKey(16);
-    cout << "Случайный пароль IDEA: " << key << endl;
+void Windows::choiceKeyGenXOR() {
+    string key = genXORKey(16);
+    cout << "пїЅпїЅпїЅпїЅпїЅпїЅXORпїЅпїЅпїЅпїЅпїЅпїЅ IDEA: " << key << endl;
 }
 
 void Windows::choiceKeyGenRc4() {
     string key = genRc4Key(16);
-    cout << "Случайный ключ RC4: " << key << endl;
+    cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ RC4: " << key << endl;
 }
 
 void Windows::choiceKeyGenPermutation() {
-    cout << "Введите количество столбцов: ";
+    cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: ";
     int cols;
     cin >> cols;
     cin.ignore();
     vector<int> key = genPermutationKey(cols);
-    cout << "Случайный ключ перестановки: ";
+    cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: ";
     for (int k : key) {
         cout << k << " ";
     }

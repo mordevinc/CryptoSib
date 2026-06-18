@@ -1,9 +1,9 @@
 #include "menu.h"
 
-// Установка кодировки консоли
+// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 void setConsoleEncoding() {
 #ifdef _WIN32
-	// Windows: устанавливаем кодировку 1251
+	// Windows: пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ 1251
 	SetConsoleOutputCP(1251);
 	SetConsoleCP(1251);
 #else
@@ -12,30 +12,30 @@ void setConsoleEncoding() {
 }
 
 int Windows::showTextOperations() {
-	cout << "\nВыбор операции:" << endl;
-	cout << "1) Шифрование текста" << endl;
-	cout << "2) Расшифрование текста" << endl;
-	cout << "Введите Ваш выбор (1 или 2): ";
-	return Windows::getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+	cout << "\nпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:" << endl;
+	cout << "1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+	cout << "2) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+	cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1 пїЅпїЅпїЅ 2): ";
+	return Windows::getChoice(1, 2, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1 пїЅпїЅпїЅ 2): ");
 }
 
 int Windows::showFileOperations() {
-	cout << "\nВыбор операции:" << endl;
-	cout << "1) Шифрование файла" << endl;
-	cout << "2) Расшифрование файла" << endl;
-	cout << "Введите Ваш выбор (1 или 2): ";
+	cout << "\nпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:" << endl;
+	cout << "1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ" << endl;
+	cout << "2) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ" << endl;
+	cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1 пїЅпїЅпїЅ 2): ";
 
-	return Windows::getChoice(1, 2, "Введите Ваш выбор (1 или 2): ");
+	return Windows::getChoice(1, 2, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1 пїЅпїЅпїЅ 2): ");
 }
 
 void Windows::showMenu(){
 	while (true) {
 
-		cout << "Выберите режим работы приложения" << endl;
-		cout << "1) Шифрование/дешифрование текста" << endl;
-		cout << "2) Шифрование/дешифрование файла" << endl;
-		cout << "3) Генератор ключей" << endl;
-		cout << "Ваш выбор: ";
+		cout << "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+		cout << "1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+		cout << "2) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ" << endl;
+		cout << "3) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+		cout << "пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: ";
 
 		int choice = getChoice(1, 4, " ");
 
@@ -52,26 +52,26 @@ void Windows::showMenu(){
 			Windows::choiceKeyGen();
 			break;
 		case FunctionsOfProgram::OFF:
-			std::cout << "Выход из приложения...\n";
+			std::cout << "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ...\n";
 			return;
 			break;
-		default: cout << "ОШИБКА\n";
+		default: cout << "пїЅпїЅпїЅпїЅпїЅпїЅ\n";
 		}
 	}
 }
 
 void Windows::choiceFuncOfText() {
-    cout << "\nВыберите алгоритм для шифрования/дешифрования текста:" << endl;
-    cout << "1) Афинный шифр" << endl;
-    cout << "2) Шифр Плейфера" << endl;
-    cout << "3) Шифр Цезаря" << endl;
+    cout << "\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:" << endl;
+    cout << "1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ" << endl;
+    cout << "2) пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+    cout << "3) пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
     cout << "4) RSA" << endl;
-    cout << "5) Сдвиг по ASCII" << endl;
-    cout << "6) IDEA" << endl;
+    cout << "5) пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ASCII" << endl;
+    cout << "6) XOR" << endl;
     cout << "7) RC4" << endl;
-    cout << "8) Столбцовая перестановка" << endl;
+    cout << "8) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 
-    int choice = getChoice(1, 8, "Введите Ваш выбор (1-8): ");
+    int choice = getChoice(1, 8, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1-8): ");
 
     switch (Algorithms(choice)) {
     case Algorithms::AFFINE:      choiceFuncOfTextAffine(); break;
@@ -79,25 +79,25 @@ void Windows::choiceFuncOfText() {
     case Algorithms::CAESAR:      choiceFuncOfTextCaesar(); break;
     case Algorithms::RSA:         choiceFuncOfTextRsa(); break;
     case Algorithms::ASCII:       choiceFuncOfTextAscii(); break;
-    case Algorithms::IDEA:        choiceFuncOfTextIdea(); break;
+    case Algorithms::XOR:        choiceFuncOfTextXOR(); break;
     case Algorithms::RC4:         choiceFuncOfTextRc4(); break;
     case Algorithms::PERMUTATION: choiceFuncOfTextPermutation(); break;
-    default: cout << "ОШИБКА\n";
+    default: cout << "пїЅпїЅпїЅпїЅпїЅпїЅ\n";
     }
 }
 
 void Windows::choiceFuncOfFile() {
-    cout << "\nВыберите алгоритм для шифрования/дешифрования файла:" << endl;
-    cout << "1) Афинный шифр" << endl;
-    cout << "2) Шифр Плейфера" << endl;
-    cout << "3) Шифр Цезаря" << endl;
+    cout << "\nпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ:" << endl;
+    cout << "1) пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ" << endl;
+    cout << "2) пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
+    cout << "3) пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
     cout << "4) RSA" << endl;
-    cout << "5) Сдвиг по ASCII" << endl;
-    cout << "6) IDEA" << endl;
+    cout << "5) пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ ASCII" << endl;
+    cout << "6) XOR" << endl;
     cout << "7) RC4" << endl;
-    cout << "8) Столбцовая перестановка" << endl;
+    cout << "8) пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ" << endl;
 
-    int choice = getChoice(1, 8, "Введите Ваш выбор (1-8): ");
+    int choice = getChoice(1, 8, "пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (1-8): ");
 
     switch (Algorithms(choice)) {
     case Algorithms::AFFINE:      choiceFuncOfFileAffine(); break;
@@ -105,9 +105,9 @@ void Windows::choiceFuncOfFile() {
     case Algorithms::CAESAR:      choiceFuncOfFileCaesar(); break;
     case Algorithms::RSA:         choiceFuncOfFileRsa(); break;
     case Algorithms::ASCII:       choiceFuncOfFileAscii(); break;
-    case Algorithms::IDEA:        choiceFuncOfFileIdea(); break;
+    case Algorithms::XOR:        choiceFuncOfFileXOR(); break;
     case Algorithms::RC4:         choiceFuncOfFileRc4(); break;
     case Algorithms::PERMUTATION: choiceFuncOfFilePermutation(); break;
-    default: cout << "ОШИБКА\n";
+    default: cout << "пїЅпїЅпїЅпїЅпїЅпїЅ\n";
     }
 }

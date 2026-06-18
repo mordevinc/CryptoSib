@@ -53,7 +53,7 @@ void CrossPlatform::choiceFuncOfText() {
     cout << "3) Шифр Цезаря" << endl;
     cout << "4) RSA" << endl;
     cout << "5) Сдвиг по ASCII" << endl;
-    cout << "6) IDEA" << endl;
+    cout << "6) XOR" << endl;
     cout << "7) RC4" << endl;
     cout << "8) Столбцовая перестановка" << endl;
 
@@ -65,7 +65,7 @@ void CrossPlatform::choiceFuncOfText() {
     case Algorithms::CAESAR:      choiceFuncOfTextCaesar(); break;
     case Algorithms::RSA:         choiceFuncOfTextRsa(); break;
     case Algorithms::ASCII:       choiceFuncOfTextAscii(); break;
-    case Algorithms::IDEA:        choiceFuncOfTextIdea(); break;
+    case Algorithms::XOR:        choiceFuncOfTextXOR(); break;
     case Algorithms::RC4:         choiceFuncOfTextRc4(); break;
     case Algorithms::PERMUTATION: choiceFuncOfTextPermutation(); break;
     default: cout << "ОШИБКА\n";
@@ -79,7 +79,7 @@ void CrossPlatform::choiceFuncOfFile() {
     cout << "3) Шифр Цезаря" << endl;
     cout << "4) RSA" << endl;
     cout << "5) Сдвиг по ASCII" << endl;
-    cout << "6) IDEA" << endl;
+    cout << "6) XOR" << endl;
     cout << "7) RC4" << endl;
     cout << "8) Столбцовая перестановка" << endl;
 
@@ -91,7 +91,7 @@ void CrossPlatform::choiceFuncOfFile() {
     case Algorithms::CAESAR:      choiceFuncOfFileCaesar(); break;
     case Algorithms::RSA:         choiceFuncOfFileRsa(); break;
     case Algorithms::ASCII:       choiceFuncOfFileAscii(); break;
-    case Algorithms::IDEA:        choiceFuncOfFileIdea(); break;
+    case Algorithms::XOR:        choiceFuncOfFileXOR(); break;
     case Algorithms::RC4:         choiceFuncOfFileRc4(); break;
     case Algorithms::PERMUTATION: choiceFuncOfFilePermutation(); break;
     default: cout << "ОШИБКА\n";

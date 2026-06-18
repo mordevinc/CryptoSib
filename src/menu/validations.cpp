@@ -10,7 +10,7 @@ int Windows::getChoice(int min, int max, const string& prompt) {
 		}
 		cin.clear();
 		cin.ignore(1000, '\n');
-		cout << "Îøèáêà: ââåäèòå ÷èñëî îò " << min << " äî " << max << endl;
+		cout << "ÐžÑˆÐ¸Ð±ÐºÐ°: Ð²Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ñ‡Ð¸ÑÐ»Ð¾ Ð¾Ñ‚ " << min << " Ð´Ð¾ " << max << endl;
 	}
 }
 
@@ -24,7 +24,7 @@ string Windows::checkText() {
 				continue;
 			}
 			else {
-				cout << "Ñèìâîëû, ñîäåðæàùèåñÿ â òåêñòå íå îòíîñÿòñÿ ê äàííîìó àëôàâèòó" << endl;
+				cout << "Ð¡Ð¸Ð¼Ð²Ð¾Ð»Ñ‹, ÑÐ¾Ð´ÐµÑ€Ð¶Ð°Ñ‰Ð¸ÐµÑÑ Ð² Ñ‚ÐµÐºÑÑ‚Ðµ Ð½Ðµ Ð¾Ñ‚Ð½Ð¾ÑÑÑ‚ÑÑ Ðº Ð´Ð°Ð½Ð½Ð¾Ð¼Ñƒ Ð°Ð»Ñ„Ð°Ð²Ð¸Ñ‚Ñƒ" << endl;
 				validText = 0;
 				break;
 			}
@@ -38,7 +38,7 @@ string Windows::checkText() {
 string Windows::existFile(const string& operation, const string& dir) {
 	string pathFile;
 	while (true) {
-		cout << "Ââåäèòå ïóòü äî ôàéëà, êîòîðûé õîòèòå " << operation << "." << endl;
+		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿ÑƒÑ‚ÑŒ Ð´Ð¾ Ñ„Ð°Ð¹Ð»Ð°, ÐºÐ¾Ñ‚Ð¾Ñ€Ñ‹Ð¹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ " << operation << "." << endl;
 		getline(cin, pathFile);
 		ifstream file(dir + pathFile);
 		if (file.good()) {
@@ -46,7 +46,7 @@ string Windows::existFile(const string& operation, const string& dir) {
 			return pathFile;
 		}
 		else {
-			cout << "Ïî óêàçàííîìó ïóòè ôàéë íå íàéäåí! Ïîïðîáóéòå ââåñòè ñóùåñòâóþùèé ïóòü!" << endl;
+			cout << "ÐŸÐ¾ ÑƒÐºÐ°Ð·Ð°Ð½Ð½Ð¾Ð¼Ñƒ Ð¿ÑƒÑ‚Ð¸ Ñ„Ð°Ð¹Ð» Ð½Ðµ Ð½Ð°Ð¹Ð´ÐµÐ½! ÐŸÐ¾Ð¿Ñ€Ð¾Ð±ÑƒÐ¹Ñ‚Ðµ Ð²Ð²ÐµÑÑ‚Ð¸ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð¿ÑƒÑ‚ÑŒ!" << endl;
 		}
 	}
 }
@@ -55,7 +55,7 @@ string Windows::accessCreateDirForSaveFile(const string& operation, const string
 	string pathFile;
 	string choiceFile;
 	while (true) {
-		cout << "Ââåäèòå ïóòü äëÿ ïðîìåæóòî÷íîãî " << operation << " ôàéëà." << endl;
+		cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¿ÑƒÑ‚ÑŒ Ð´Ð»Ñ Ð¿Ñ€Ð¾Ð¼ÐµÐ¶ÑƒÑ‚Ð¾Ñ‡Ð½Ð¾Ð³Ð¾ " << operation << " Ñ„Ð°Ð¹Ð»Ð°." << endl;
 		getline(cin, pathFile);
 		fs::path p(dir + pathFile);
 		if (fs::exists(p.parent_path()) || fs::create_directories(p.parent_path())) {
@@ -63,20 +63,20 @@ string Windows::accessCreateDirForSaveFile(const string& operation, const string
 		}
 		else {
 			while (true) {
-				cout << "Íå óäàëîñü ñîçäàòü äèðåêòîðèþ! Õîòèòå ââåñòè äðóãîé ïóòü? (äà/íåò):" << endl;
+				cout << "ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ ÑÐ¾Ð·Ð´Ð°Ñ‚ÑŒ Ð´Ð¸Ñ€ÐµÐºÑ‚Ð¾Ñ€Ð¸ÑŽ! Ð¥Ð¾Ñ‚Ð¸Ñ‚Ðµ Ð²Ð²ÐµÑÑ‚Ð¸ Ð´Ñ€ÑƒÐ³Ð¾Ð¹ Ð¿ÑƒÑ‚ÑŒ? (Ð´Ð°/Ð½ÐµÑ‚):" << endl;
 				getline(cin, choiceFile);
-				if (choiceFile == "äà") {
+				if (choiceFile == "Ð´Ð°") {
 					break;
 				}
-				else if (choiceFile == "íåò") {
-					cout << "Îïåðàöèÿ îòìåíåíà!" << endl;
-					return "Îòìåíà";
+				else if (choiceFile == "Ð½ÐµÑ‚") {
+					cout << "ÐžÐ¿ÐµÑ€Ð°Ñ†Ð¸Ñ Ð¾Ñ‚Ð¼ÐµÐ½ÐµÐ½Ð°!" << endl;
+					return "ÐžÑ‚Ð¼ÐµÐ½Ð°";
 				}
 				else {
-					cout << "Ââåäèòå 'äà' èëè 'íåò'!" << endl;
+					cout << "Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ 'Ð´Ð°' Ð¸Ð»Ð¸ 'Ð½ÐµÑ‚'!" << endl;
 				}
 			}
-			if (choiceFile == "äà") {
+			if (choiceFile == "Ð´Ð°") {
 				continue;
 			}
 		}

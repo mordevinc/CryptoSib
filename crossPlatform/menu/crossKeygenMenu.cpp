@@ -8,7 +8,7 @@ void CrossPlatform::choiceKeyGen() {
         cout << "3) Шифр Цезаря" << endl;
         cout << "4) RSA " << endl;
         cout << "5) Сдвиг по ASCII" << endl;
-        cout << "6) IDEA" << endl;
+        cout << "6) XOR" << endl;
         cout << "7) RC4" << endl;
         cout << "8) Столбцовая перестановка" << endl;
         cout << "Ваш выбор (1-8): ";
@@ -37,8 +37,8 @@ void CrossPlatform::choiceKeyGen() {
             choiceKeyGenAscii();
             break;
         }
-        case Algorithms::IDEA: {
-            choiceKeyGenIdea();
+        case Algorithms::XOR: {
+            choiceKeyGenXOR();
             break;
         }
         case Algorithms::RC4: {
@@ -68,9 +68,9 @@ void CrossPlatform::choiceKeyGenAscii() {
     cout << "Случайный сдвиг: " << shift << endl;
 }
 
-void CrossPlatform::choiceKeyGenIdea() {
-    string key = genIdeaKey(16);
-    cout << "Случайный пароль IDEA: " << key << endl;
+void CrossPlatform::choiceKeyGenXOR() {
+    string key = genXORKey(16);
+    cout << "Случайный пароль XOR: " << key << endl;
 }
 
 void CrossPlatform::choiceKeyGenRc4() {

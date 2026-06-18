@@ -74,17 +74,17 @@ string decrAsciiText(const string& text, int shift);
 bool encrAsciiFile(const string& input, const string& output, int shift);
 bool decrAsciiFile(const string& input, const string& output, int shift);
 
-// IDEA
-struct IDEAKey {
+// XOR
+struct XORKey {
     uint16_t k[52];
 };
-IDEAKey generateIDEAKey(const string& password);
-unsigned char ideaEncryptByte(unsigned char plain, const IDEAKey& key);
-unsigned char ideaDecryptByte(unsigned char cipher, const IDEAKey& key);
-string ideaEncryptText(const string& text, const string& password);
-string ideaDecryptText(const string& cipher, const string& password);
-bool ideaEncryptFile(const string& input, const string& output, const string& password);
-bool ideaDecryptFile(const string& input, const string& output, const string& password);
+XORKey generateXORKey(const string& password);
+unsigned char XOREncryptByte(unsigned char plain, const XORKey& key);
+unsigned char XORDecryptByte(unsigned char cipher, const XORKey& key);
+string XOREncryptText(const string& text, const string& password);
+string XORDecryptText(const string& cipher, const string& password);
+bool XOREncryptFile(const string& input, const string& output, const string& password);
+bool XORDecryptFile(const string& input, const string& output, const string& password);
 
 // RC4
 void rc4Init(const string& key, vector<unsigned char>& S);
@@ -105,7 +105,7 @@ string genPleyfairKey(int m);
 string genPleyfairKeyRead(int m);
 int genCaesarKey(int m);
 int genAsciiKey();
-string genIdeaKey(int length);
+string genXORKey(int length);
 string genRc4Key(int length);
 vector<int> genPermutationKey(int cols);
 
