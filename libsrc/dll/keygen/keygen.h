@@ -31,6 +31,6 @@ KEYGEN_API void genRsaKeyPair(uint64_t& e, uint64_t& d, uint64_t& n);
 
 KEYGEN_API int genCaesarKey(int m);
 KEYGEN_API int genAsciiKey();
-KEYGEN_API string genIdeaKey(int length);
+KEYGEN_API string genXORKey(int length);
 KEYGEN_API string genRc4Key(int length);
 KEYGEN_API vector<int> genPermutationKey(int cols);

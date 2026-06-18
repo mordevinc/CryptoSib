@@ -97,7 +97,7 @@ int genAsciiKey() {
     return dist(gen);
 }
 
-string genIdeaKey(int length) {
+string genXORKey(int length) {
     if (length <= 0) length = 16;
     random_device rd;
     mt19937 gen(rd());
@@ -110,7 +110,7 @@ string genIdeaKey(int length) {
 }
 
 string genRc4Key(int length) {
-    return genIdeaKey(length);
+    return genXORKey(length);
 }
 
 vector<int> genPermutationKey(int cols) {
